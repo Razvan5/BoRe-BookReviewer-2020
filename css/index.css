@@ -107,7 +107,7 @@ body::-webkit-scrollbar-thumb{
 .navbar{
 
     width:1em;
-    height: 100vh;
+    height: 95vh;
     position:fixed;
     background-color:rgb(67, 89, 170);
     transition: width 200ms ease;
@@ -281,7 +281,7 @@ footer{
     transition: 1s;
 
 }
-#scrisStanga{
+#scrisDreapta{
     position:absolute;
     display:flex;
     align-items: center;
@@ -294,7 +294,7 @@ footer{
     right:3vw;
 }
 
-#scrisDreapta{
+#scrisStanga{
     position:absolute;
     display:flex;
     align-items: center;
@@ -329,4 +329,19 @@ footer{
     transform-origin: bottom;
     transform: skewX(45deg);
 }
+
+/*pentru pagina New Account*/
+
+.optinfo_left_allign{
+    display:flex;
+    flex-direction: column;
+    margin-left: 5px;
+    align-items: flex-start;
+
+}
+
+#Y{
+    max-width: 2vw;
+}
+
 

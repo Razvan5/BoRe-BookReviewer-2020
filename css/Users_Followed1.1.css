@@ -35,7 +35,7 @@ header{
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
 }
 
-.logo, #chooseYourGenre{
+.logo, #searchForUsers, #usersFollowedTitle{
     font-size: 175%;
     font-family: Helvetica, sans-serif;
     font-weight: bold;
@@ -150,17 +150,19 @@ footer{
 
 /*Cardurile*/
 
-#hotAndOptions{
+#searchAndResults, #usersFollowedBox{
     display:flex;
     flex-direction: column;
-    max-width:65%;
+    max-width:50%;
     margin-top:5%;
-    margin-left:27%;
+    margin-left:25.5%;
+    margin-bottom:5%;
     justify-content: space-between;
+    border:1px solid black;
 }
 
-#options{
-    margin-left:10%;
+#search, #usersFollowedInside{
+    margin-left:24%;
     display:flex;
     margin-top:10%;
     flex-direction: column;
@@ -171,6 +173,7 @@ footer{
     align-self: left;
     background-color: rgb(31, 27, 27);
     border-radius: 20%;
+    border:1px solid black;
     
 }
 
@@ -182,7 +185,7 @@ footer{
     font-size: large;
 }
 
-#see{
+#searchButton{
     max-width: 200px;
     text-align: center;
     align-self: center;
@@ -197,51 +200,72 @@ footer{
     max-width:85%;
 }
 
-.card {
-    box-shadow: 0 4px 8px 0 rgb(107, 106, 106);
-    transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
-    background-color: rgb(34, 2, 2);
-    min-width:90%;
-    align-self: center;
-    margin-bottom: 2vh;
-    text-indent: 2vw;
-    min-width:50vw;
-
-}
-
-
-
-.card:hover {
-    box-shadow: 0 4px 8px 6px rgb(37, 33, 33);
-}
-  /* Add rounded corners to the top left and the top right corner of the image */
-
-
-.cardBody{
-      display:flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-bottom: 3%;
-}
-
-
-
 
 .text{
-    color: rgb(199, 180, 180);
+    color: rgb(209, 164, 66);
     text-shadow:1px 1px 8px gray;
 }
 
-.bookImage{
-    max-height: 200px;
-    max-width:200px;
-    margin-left:2%;
-    box-shadow: 0 0 2px 3px rgb(107, 106, 106);
-    transition: 0.8s;
+#typeUserName{
+    max-width: 20vw;
+    font-size:2vh;
+    align-self:center;
+}
+#results{
+    display:none;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: space-around;
 }
 
-.bookImage:hover{
-    box-shadow: 0 0 5px 20px rgb(107, 106, 106);
+ #usersFollowed{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: space-around;
 }
 
+.usersFound{
+   margin:2%;
+   display:flex;
+   flex-direction: column;
+   background-color: rgb(173, 27, 27);
+   min-width:10vw;
+   min-height:3vh;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   box-shadow: 0 0 20px 5px white;
+   transition:0.3s;
+}
+
+.usersFound:hover{
+    margin:2%;
+    display:flex;
+    background-color: rgb(88, 7, 7);
+    min-width:10vw;
+    min-height:3vh;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 0 0 25px 15px white;
+    transition:0.3s;
+ }
+
+ .usersFound:active{
+    margin:2%;
+    display:flex;
+    background-color: rgb(88, 7, 7);
+    min-width:10vw;
+    min-height:3vh;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 0 0 25px 15px white;
+    transition:0.3s;
+ }
+
+ .usersFound img{
+     max-height:120px;
+     max-width:90px;
+     margin-top:2vh;
+     border:1px solid white;
+ }

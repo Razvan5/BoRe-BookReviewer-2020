@@ -147,90 +147,24 @@ footer{
 
 
 
-
-/*Cardurile*/
-
-#hotAndOptions{
+/*div-urile cu cartea*/
+#everythingAboutBook{
     display:flex;
-    flex-direction: column;
-    max-width:65%;
-    margin-top:5%;
-    margin-left:27%;
-    justify-content: space-between;
-}
-
-#options{
-    margin-left:10%;
-    display:flex;
+    flex-direction:column;
     margin-top:10%;
-    flex-direction: column;
-    justify-content: space-between;
-    justify-items: center;
-    max-width:50%;
+    margin-bottom:10%;
+    margin-left:20%;
+    max-width: 70vw;
     min-height:20vh;
-    align-self: left;
-    background-color: rgb(31, 27, 27);
-    border-radius: 20%;
-    
+    background-color: white;
 }
 
- #genres{
-    max-width: 200px;
-    text-align: center;
-    align-self: center;
-    height:4vh;
-    font-size: large;
-}
-
-#see{
-    max-width: 200px;
-    text-align: center;
-    align-self: center;
-    height:8vh;
-    font-size: large;
-    border-radius: 50%;
-}
-
-#hot {
+#bookCoverRatingTitleAuthor{
+    margin:5%;
     display:flex;
-    flex-wrap: wrap;
-    max-width:85%;
-}
-
-.card {
-    box-shadow: 0 4px 8px 0 rgb(107, 106, 106);
-    transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
-    background-color: rgb(34, 2, 2);
-    min-width:90%;
-    align-self: center;
-    margin-bottom: 2vh;
-    text-indent: 2vw;
-    min-width:50vw;
-
-}
-
-
-
-.card:hover {
-    box-shadow: 0 4px 8px 6px rgb(37, 33, 33);
-}
-  /* Add rounded corners to the top left and the top right corner of the image */
-
-
-.cardBody{
-      display:flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      margin-bottom: 3%;
-}
-
-
-
-
-.text{
-    color: rgb(199, 180, 180);
-    text-shadow:1px 1px 8px gray;
+    flex-direction: row;
+    justify-content: space-around;
+    
 }
 
 .bookImage{
@@ -238,10 +172,4 @@ footer{
     max-width:200px;
     margin-left:2%;
     box-shadow: 0 0 2px 3px rgb(107, 106, 106);
-    transition: 0.8s;
 }
-
-.bookImage:hover{
-    box-shadow: 0 0 5px 20px rgb(107, 106, 106);
-}
-
