@@ -153,6 +153,7 @@ footer{
 #searchAndResults, #groupsICreatedBox{
     display:flex;
     flex-direction: column;
+    min-width:800px;
     max-width:50%;
     margin-top:5%;
     margin-left:25.5%;
@@ -169,6 +170,7 @@ footer{
     justify-content: space-between;
     justify-items: center;
     max-width:50%;
+    min-width:500px;
     min-height:20vh;
     align-self: left;
     background-color: rgb(31, 27, 27);
@@ -185,7 +187,7 @@ footer{
     font-size: large;
 }
 
-#searchButton{
+#searchButton, #createConfirm, #cancel{
     max-width: 200px;
     text-align: center;
     align-self: center;
@@ -215,6 +217,10 @@ footer{
     color: rgb(209, 164, 66);
     text-shadow:1px 1px 8px gray;
 }
+.textWhite{
+    color: rgb(199, 180, 180);
+    text-shadow:1px 1px 8px gray;
+}
 
 #typeGroupName{
     max-width: 20vw;
@@ -240,8 +246,8 @@ footer{
    display:flex;
    flex-direction: column;
    background-color: rgb(173, 27, 27);
-   min-width:13vw;
-   max-width:13vw;
+   min-width:230px;
+   max-width:230px;
    min-height:3vh;
    align-content: center;
    justify-content: center;
@@ -254,8 +260,8 @@ footer{
     margin:2%;
     display:flex;
     background-color: rgb(88, 7, 7);
-    min-width:13vw;
-    max-width:13vw;
+    min-width:230px;
+    max-width:230px;
     min-height:3vh;
     align-content: center;
     justify-content: center;
@@ -267,8 +273,8 @@ footer{
     margin:2%;
     display:flex;
     background-color: rgb(88, 7, 7);
-    min-width:13vw;
-    max-width:13vw;
+    min-width:230px;
+    max-width:230px;
     min-height:3vh;
     align-content: center;
     justify-content: center;
@@ -304,4 +310,10 @@ footer{
      margin-right:2vw;
      max-height:4vh;
      overflow-y:hidden;
+ }
+
+ #newGroup{
+     display:none;
+     flex-direction: column;
+     align-items:center;
  }
