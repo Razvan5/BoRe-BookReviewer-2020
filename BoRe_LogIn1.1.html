@@ -52,27 +52,27 @@
         <div class="imgBox2">
             <img class="img_sub" src="images/genericBook.jpg" alt="GenericBook">
 
-                <form class="par_peste" action="BoRe_home_LoggedIn1.1.html">
+                <form class="par_peste">
                     <label for="user">User Name*:</label>
                     <br>
-                    <input class="login_input" type="text",name="user", placeholder="User_Name", required>
+                    <input class="login_input" type="text",name="user", placeholder="User_Name", id="userName" required>
 
                     <br><br>
 
                     <label for="E-mail">E-mail*:</label>
                     <br>
-                    <input class="login_input" type="text",name="E-mail" placeholder="someone@mail.com", required>
+                    <input class="login_input" id="userEmail" type="text",name="E-mail" placeholder="someone@mail.com", required>
 
                     <br><br>
 
                     <label for="Password">Password*:</label>
                     <br>
-                    <input class="login_input" type="password",name="Password" placeholder="**********", required>
+                    <input class="login_input" id="userPassword" type="password",name="Password" placeholder="**********", required>
 
                     <br><br>
 
                     <form>
-                        <input class="submit" type="Submit">
+                        <button class="button" id="submitButton" type="button">Submit</button>
                     </form>
                 </form>
         </div>
@@ -81,5 +81,6 @@
     <footer>
         MR-AP©
     </footer>
+    <script src="js/BoRe_Login1.1.js"></script>
 </body>
 </html>

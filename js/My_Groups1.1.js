@@ -18,3 +18,9 @@ cancel.addEventListener("click",function(){
 });
 
 };
+
+window.onclick=function(event){
+    if(event.target.matches(".viewGroupButton")){
+        window.location.href="Group_Page1.1.html";
+    }
+}
