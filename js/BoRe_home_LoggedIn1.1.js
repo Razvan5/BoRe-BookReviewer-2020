@@ -18,3 +18,6 @@ var clearButton=document.getElementById("clearButton");
 clearButton.onclick=function(){
     searchResults.style.display="none";
 }
+
+
+

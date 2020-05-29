@@ -46,7 +46,7 @@
                 <form>
                     <label for="user">User Name*:</label>
                     <br>
-                    <input type="text" name="user" id="user">
+                    <input type="text" name="user" id="userName">
                 </form>
 
                 <br><br>
@@ -54,7 +54,7 @@
                 <form>
                     <label for="e-mail">E-mail*:</label>
                     <br>
-                    <input type="text" name="e-mail" id="e-mail">
+                    <input type="text" name="e-mail" id="userEmail">
                 </form>
 
                 <br><br>
@@ -62,7 +62,7 @@
                 <form>
                     <label for="Password">Password*:</label>
                     <br>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="userPassword">
                 </form>
 
                 <br><br>
@@ -70,12 +70,12 @@
                 <form>
                     <label for="re_Password">Retype Password*:</label>
                     <br>
-                    <input type="password" name="re_Password" id="re_Password">
+                    <input type="password" name="re_Password" id="userRetypePassword">
                 </form>
 
                 <br> <br><br> <br><br> <br><br> <br>
                 <form action="BoRe_home_LoggedIn1.1.html">
-                    <input class="submit" type="Submit">
+                    <button id="submitButton" type="button">Submit</button>
                 </form>
 
             </div>
@@ -102,11 +102,11 @@
                     <form>
                         <label>Gender:</label> <br>
                         <label class="select_size" for="Male">Male</label>
-                        <input class=".input_type_radio" type="radio" id="Male" name="Male">
+                        <input class="input_type_radio" type="radio" id="Male" name="gender">
                         <label class="select_size" for="Female">Female</label>
-                        <input class=".input_type_radio" type="radio" id="Female" name="Female">
+                        <input class="input_type_radio" type="radio" id="Female" name="gender">
                         <label class="select_size" for="AH">Attack Helicopter</label>
-                        <input class=".input_type_radio" type="radio" id="AH" name="AH">
+                        <input class="input_type_radio" type="radio" id="AH" name="gender">
                     </form>
 
                     <br><br>
@@ -159,7 +159,7 @@
                             <option value="March">March</option>
                             <option value="April">April</option>
                             <option value="May">May</option>
-                            <option value="June">JUne</option>
+                            <option value="June">June</option>
                             <option value="July">July</option>
                             <option value="August">August</option>
                             <option value="September">September</option>
@@ -176,19 +176,20 @@
 
                     <form>
                         <label for="Address">Address:</label><br>
-                        <input type="text" id="Address" name="Address">
+                        <input type="text" id="userAddress" name="Address">
                     </form>
 
                     <form>
                         <label for="Country">Country:</label><br>
-                        <input type="text" id="Country" name="Country">
+                        <input type="text" id="userCountry" name="Country">
                     </form>
 
                     <br><br>
 
                     <label for="fav_books">My Favourite Book Genres:</label><br>
                     <label class="select_size" for="1">No. 1:</label>
-                    <select class="select_size" name="1" id="1">
+                    <select class="select_size" name="1" id="userGenre1">
+                        <option value=""></option>
                         <option value="Adventure">Adventure</option>
                         <option value="Comedy">Comedy</option>
                         <option value="Drama">Drama</option>
@@ -201,10 +202,12 @@
                         <option value="Romance">Romance</option>
                         <option value="Science Fiction">Science Fiction</option>
                         <option value="Short Stories">Short Stories</option>
+                        <option value="War">War</option>
                     </select>
 
                     <label class="select_size" for="2">No. 2:</label>
-                    <select class="select_size" name="2" id="2">
+                    <select class="select_size" name="2" id="userGenre2">
+                        <option value=""></option>
                         <option value="Adventure">Adventure</option>
                         <option value="Comedy">Comedy</option>
                         <option value="Drama">Drama</option>
@@ -217,10 +220,12 @@
                         <option value="Romance">Romance</option>
                         <option value="Science Fiction">Science Fiction</option>
                         <option value="Short Stories">Short Stories</option>
+                        <option value="War">War</option>
                     </select>
 
                     <label class="select_size" for="3">No. 3:</label>
-                    <select class="select_size" name="3" id="3">
+                    <select class="select_size" name="3" id="userGenre3">
+                        <option value=""></option>
                         <option value="Adventure">Adventure</option>
                         <option value="Comedy">Comedy</option>
                         <option value="Drama">Drama</option>
@@ -233,6 +238,7 @@
                         <option value="Romance">Romance</option>
                         <option value="Science Fiction">Science Fiction</option>
                         <option value="Short Stories">Short Stories</option>
+                        <option value="War">War</option>
                     </select>
 
                     <br><br>
@@ -256,6 +262,7 @@
     <footer>
         MR-AP©
     </footer>
+    <script src="js/New_Account1.1.js"></script>
 </body>
 
 </html>
