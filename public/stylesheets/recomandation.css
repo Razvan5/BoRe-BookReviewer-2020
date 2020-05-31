@@ -1,7 +1,10 @@
+html{
+    height:100%;
+}
 body{
+    /*border:3px solid [a-z]+;*/
     margin:0px;
     padding:0px;
-    height:100%;
     width:100%;
     background-image: url("../images/shattered.png");
     background-color: #f2eecb;
@@ -13,7 +16,11 @@ body{
     font-size: 3vmin;
     color:#FFFFF0;
 
-    overflow-x:hidden;
+    overflow-x: hidden;    
+
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
 }
 header{
     position: fixed;
@@ -47,130 +54,237 @@ header{
     1px 30px 60px rgba(16,16,16,0.4);
     box-shadow: 10px 10px 10px 10px rgb(74, 74, 74);
 
-}
+    z-index:100;
 
- .shelf-wrapper{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    position: absolute;
 }
-.shelf{
-    height: 15vh;
-    width: 90%;
-    background-image: url("../images/shelf.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-/* footer{
+footer{
 
-    position: absolute;
     bottom: 0px;
     background: url('../images/lowerBooCase.png');
-	background-size: contain;
+    background-size: contain;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    
     height: 3.5em;
     width:100%;
-	background-repeat: repeat-x;
-    background-position: bottom;
+
     display: flex;
     justify-content: center;
     align-items: flex-end;
 
-} */ 
+}
 
 #bookshelf-wrapper{
+    /*used to contain the bookshelf and sandwich it between the header and the footer  */
     margin:0px;
     padding: 0px;
-    height: 100vh;
+
+    height:100%;
     width:100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#bookshelf{
+    /*border:3px solid [a-z]+;*/
+    width: 60vw;
+    height: auto;
+
+    margin:0px;
+    padding: 5vh;
+
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    /* so it can be offset   */
+    margin-top:20vh;
+    margin-bottom: 20vh;
+
+    background-color: #513627;
+}
+.bookrow-shelf{
+
+    margin:0px;
+    padding: 0px;
+
+    height: auto;
+    width:100%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+
+    /*border:3px solid [a-z]+;*/
+
+}
+.bookrow{
+    
+    /*border:3px solid [a-z]+;*/
+    margin:0px;
+    padding: 0px;
+
+    height: auto;
+    width:100%;
 
     display: flex;
     justify-content: center;
     align-content: center;
 
 }
-.book-grid{
-    border:3px solid red;
-    width: 80vw;
-    height: auto;
-    margin:0px;
-    padding: 0px;
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-
-}
 .book{
 
-    border:3px solid red;
+    /* border:3px solid blue; */
 
     margin:0px;
-    /* margin-left:5vh; */
-    /* margin-right:5vh; */
+    margin-left:1.5vw;
+    margin-right:1.5vw;
     padding:0px;
-    height:30vh;
-    width:auto;
-    background-image: url("../images/solaris-cover.png");
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:auto;
+    width:12.5%;
 
-    background-size:contain;
-    background-position:center;
-    background-repeat: no-repeat;
 }
+.book-cover{
+    margin:0px;
+    padding:0px;
 
-/*////////////*/
-
-html {
-	box-sizing: border-box;
-	font-size: 62.5%;
+    width:100%;
+    height:auto;
+    box-shadow: 3px 3px 3px #00000082;   
 }
-*, *:after, *:before {
-	box-sizing: inherit;
-}
-
-
-body {
-  background: lightgray;
-}
-.bookshelf--frame {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.bookshelf--frame {
-	background: tan;
-	background: url('https://static.tumblr.com/8x9m588/C8ho55ylx/bg-wood2.png'), linear-gradient(darken(#373737, 2),#373737 290px,lighten(#9A8548, 4) 290px,lighten(#9A8548, 4) 292px,#9A8548 292px,#9A8548 298px,darken(#9A8548, 4) 298px,darken(#9A8548, 4) 300px);	
-	background-size: auto, 10px 300px;
-	border-left: 10px solid #9A8548;
-	border-right: 10px solid #9A8548;
-	text-align: center;
-	
-}
-
-&:first-of-type {
-    border-top: 10px solid #9A8548;
-}
-.book-wrapper {
-    display: inline-block;
-    width: 290px;
-    vertical-align: bottom;
-    height: 280px;
-    position: relative;
-    margin: 10px 0;
-    max-width: 100%;
- 
-}
-img {
+.shelf{
+    padding:0px;
+    margin:0px;
+    margin-bottom: 5vh;
+    /*border:3px solid [a-z]+;*/
     height: auto;
+    width: 100%;
+    position: relative;
+}
+
+
+/*review stars start*/
+.review-stars{
+    /* border:3px solid red; */
+    display: flex;
+    flex-direction: row-reverse;
     width: auto;
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-    transform: translateX(-50%);
-          max-height: 100%;
-          max-width: 100%;
-      }
+}
+.review-stars input{
+    display: none;
+}
+.review-stars label{
+    display: block;
+    cursor: pointer;
+    width:auto;
+    z-index: 30;
+}
+.review-stars label:before{
+    content:'\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    display: block;
+    font-size:60%;
+    color:#101010;
+    z-index: 30;
+}
+.review-stars label:after{
+    content:'\f005';
+    /* for font awesome i use my account
+    +set the font family to the one below with   
+    font-weight: 900; for solid,    
+    font-weight: 400;for simple and brands
+    */
+    /*DONT FORGET NUMBERS REVERSED:1=5 stars,5=1star!!!!*/
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: relative;
+    display: block;
+    font-size:60%;;
+    color:#ffe342;
+    top:0;
+    opacity: 0;
+    z-index: 30;
+    transition: .5s;
+    text-shadow: 0 3px 5px rgba(0,0,0,.5);
+
+}
+.review-stars label:hover:after,
+.review-stars input:hover ~ label:after,/*means it goes from the hover input up to all the elements after it*/
+.review-stars input:checked ~ label:after/*means it goes from the checked input and it makes all the label */
+{
+    opacity: 1;
+}
+/*review stars end*/
+/*reading state start*/
+.dropdown-read-state{
+    font-size: 0.5em;
+    width: 90%;
+}
+.custom-select {
+    position: relative;
+    font-family: Arial;
+  }
+  
+  .custom-select select {
+    display: none; /*hide original SELECT element: */
+  }
+  
+  .select-selected {
+    background-color: DodgerBlue;
+  }
+  
+  /* Style the arrow inside the select element: */
+  .select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+  
+  /* Point the arrow upwards when the select box is open (active): */
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+  
+  /* style the items (options), including the selected item: */
+  .select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+  }
+  
+  /* Style items (options): */
+  .select-items {
+    position: absolute;
+    background-color: DodgerBlue;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  /* Hide the items when the select box is closed: */
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+/*reading state end*/
