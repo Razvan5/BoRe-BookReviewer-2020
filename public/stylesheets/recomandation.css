@@ -1,79 +1,3 @@
-html{
-    height:100%;
-}
-body{
-    /*border:3px solid [a-z]+;*/
-    margin:0px;
-    padding:0px;
-    width:100%;
-    background-image: url("../images/shattered.png");
-    background-color: #f2eecb;
-
-    background-attachment: fixed;
-    background-repeat: repeat;
-
-    font-family: Times Roman, sans-serif;
-    font-size: 3vmin;
-    color:#FFFFF0;
-
-    overflow-x: hidden;    
-
-    display: flex;
-    min-height: 100%;
-    flex-direction: column;
-}
-header{
-    position: fixed;
-    height: 10vh;
-    /* ??? */
-    width:100vw;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-
-    background-color: rgb(66, 66, 66);
-
-    text-transform: uppercase;
-    font-family: verdana;
-    font-size: 5vmin;
-    font-weight: 700;
-    color: #f5f5f5;
-    text-shadow: 1px 1px 1px #919191,
-        1px 2px 1px #919191,
-        1px 3px 1px #919191,
-        1px 4px 1px #919191,
-        1px 5px 1px #919191,
-        1px 6px 1px #919191,
-        1px 7px 1px #919191,
-        1px 8px 1px #919191,
-        1px 9px 1px #919191,
-        1px 10px 1px #919191,
-    1px 18px 6px rgba(16,16,16,0.4),
-    1px 22px 10px rgba(16,16,16,0.2),
-    1px 25px 35px rgba(16,16,16,0.2),
-    1px 30px 60px rgba(16,16,16,0.4);
-    box-shadow: 10px 10px 10px 10px rgb(74, 74, 74);
-
-    z-index:100;
-
-}
-footer{
-
-    bottom: 0px;
-    background: url('../images/lowerBooCase.png');
-    background-size: contain;
-    background-repeat: repeat-x;
-    background-position: bottom;
-    
-    height: 3.5em;
-    width:100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
-}
-
 #bookshelf-wrapper{
     /*used to contain the bookshelf and sandwich it between the header and the footer  */
     margin:0px;
@@ -85,6 +9,7 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 #bookshelf{
     /*border:3px solid [a-z]+;*/
@@ -102,7 +27,8 @@ footer{
     margin-top:20vh;
     margin-bottom: 20vh;
 
-    background-color: #513627;
+    background-color: #453026;
+    border:5px solid #000000;
 }
 .bookrow-shelf{
 
@@ -225,66 +151,83 @@ footer{
 }
 /*review stars end*/
 /*reading state start*/
-.dropdown-read-state{
-    font-size: 0.5em;
-    width: 90%;
+.select-container{
+    display: flex;
+    width:  100%;
+    height: 100%;
+    flex-direction: column-reverse;
 }
-.custom-select {
+.select-container .options-container{
+    background-color: #ffcf6e;
+    color:#484848;
+    /*max-height: 0;*/
+    top:100%;
+    width:100%;
+    opacity:0;
+    transition:all 0.4s;
+    /* border-radius: 8px; */
+    overflow: hidden;
+    position: absolute;
+    z-index: 30;
+
+}
+.read-state{
     position: relative;
-    font-family: Arial;
-  }
-  
-  .custom-select select {
-    display: none; /*hide original SELECT element: */
-  }
-  
-  .select-selected {
-    background-color: DodgerBlue;
-  }
-  
-  /* Style the arrow inside the select element: */
-  .select-selected:after {
-    position: absolute;
+    width: 130%;
+    height:auto;
+    font-size:60%;
+    /* border:3px solid green;  */
+
+}
+/* .selected::after{
     content: "";
-    top: 14px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-color: #fff transparent transparent transparent;
-  }
-  
-  /* Point the arrow upwards when the select box is open (active): */
-  .select-selected.select-arrow-active:after {
-    border-color: transparent transparent #fff transparent;
-    top: 7px;
-  }
-  
-  /* style the items (options), including the selected item: */
-  .select-items div,.select-selected {
-    color: #ffffff;
-    padding: 8px 16px;
-    border: 1px solid transparent;
-    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-    cursor: pointer;
-  }
-  
-  /* Style items (options): */
-  .select-items {
+    background: url("../images/arrow-down.png");
+    background-size: contain ;
+    background-repeat: no-repeat;
+
     position: absolute;
-    background-color: DodgerBlue;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 99;
-  }
-  
-  /* Hide the items when the select box is closed: */
-  .select-hide {
+   
+    height:100%;
+    width:20%;
+    transition: all 0.4s;
+} */
+.arrow{
+    height:0.5em;
+}
+.selected{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffa24a;
+    /* border-radius: 8em; */
+    color:#484848;
+    order:0;
+
+}
+.select-container .options-container.active{
+    opacity: 1;
+}
+.arrow{
+    transition:all ease-in;
+}
+.active .arrow{
+    transition: all ease-in;
+    transform:rotateX(180deg);
+}
+.select-container .option, .selected{
+    padding: 0.1em 0.2em;
+    cursor: pointer;
+}
+.select-container .option:hover{
+    background-color: #ffa24a;
+
+}
+.select-container label{
+    cursor: pointer;
+}
+.select-container .option .radio{
     display: none;
-  }
-  
-  .select-items div:hover, .same-as-selected {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+}
+
 /*reading state end*/
