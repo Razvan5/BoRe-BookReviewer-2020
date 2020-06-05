@@ -359,6 +359,10 @@ footer{
     min-width: 400px;
 }
 
+.hiddenID{  /* o sa avem nevoie de ID pt requesturi, dar nu e cazul sa il si afisam in pagina*/
+    display:none;
+}
+
 .bookImage{
     height:200px;
     width:160px;

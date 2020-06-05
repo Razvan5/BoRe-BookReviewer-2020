@@ -6,7 +6,22 @@ var newGroup=document.getElementById("newGroup");
 var cancel = document.getElementById("cancel");
 
 searchButton.addEventListener("click",function(){
-    results.style.display="flex";
+    var groupName=document.getElementById("typeGroupName");                  //preluam ce a scris userul
+    console.log(groupName.value);
+
+
+    var findGroupRequest = new XMLHttpRequest();                        //facem un request
+    findGroupRequest.open('POST', '/findGroupRequest');
+    findGroupRequest.setRequestHeader("Content-Type", "application/javascript");
+    findGroupRequest.onload = function () {
+        console.log(findGroupRequest.responseText);
+        results.innerHTML='';
+        results.innerHTML=findGroupRequest.responseText;
+        results.style.display="flex";
+    };
+
+    findGroupRequest.send(groupName.value);    //trimitem doar ce a scris userul, nu e nevoie de obiect, JSON, etc
+
 });
 
 createNewGroupButton.addEventListener("click",function(){

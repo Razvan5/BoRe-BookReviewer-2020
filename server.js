@@ -28,8 +28,10 @@ const BoRe_homejs = fs.readFileSync("./js/BoRe_home1.1.js", "UTF8");
 const BoRe_home_LoggedInjs = fs.readFileSync("./js/BoRe_home_LoggedIn1.1.js", "UTF8");
 const usersFollowedjs = fs.readFileSync("./js/Users_followed1.1.js", "UTF8");
 const myGroupsjs = fs.readFileSync("./js/My_Groups1.1.js", "UTF8");
-const groupPagejs = fs.readFileSync("./js/Group_Page1.1.js", "UTF8");                                                       
-const newAccountjs = fs.readFileSync("./js/New_Account1.1.js", "UTF8"); 
+const groupPagejs = fs.readFileSync("./js/Group_Page1.1.js", "UTF8");
+const newAccountjs = fs.readFileSync("./js/New_Account1.1.js", "UTF8");
+const whatSHotjs = fs.readFileSync("./js/What's_Hot1.1.js", "UTF8");
+
 
 
 
@@ -190,6 +192,12 @@ var server = http.createServer(function (req, res) {
         res.end();
     }
 
+    if (req.url === "/js/What's_Hot1.1.js") {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(whatSHotjs);
+        res.end();
+    }
+
     //requesturi pentru Users_Followed
     if (req.url === "/Users_Followed1.1.html") {
         if (session.userName == '' && session.password == '' && session.email == '') {   //daca nu avem user logat, il redirectionam la homepage
@@ -336,6 +344,16 @@ var server = http.createServer(function (req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
     ////////////Requesturile lungi, care trateaza functionalitati ale paginilor/////////////////
 
     //requestul de LOGIN, care vine de la js/BoRe_Login1.1.js
@@ -392,6 +410,70 @@ var server = http.createServer(function (req, res) {
 
 
 
+
+
+
+
+
+
+    //requestul de New Account , care vine de la js/New_Account1.1.js
+    if (req.url === '/newAccountRequest') {
+        console.log("DA FAQ?");
+        var newAccountInfo = '';
+        var userInfo;
+        req.on('data', function (chunk) {
+            newAccountInfo += chunk;
+        });
+        req.on('end', () => {
+            userInfo = JSON.parse(newAccountInfo);
+            console.log(userInfo);
+
+
+
+            // cautam daca exista deja un user cu acelasi email
+
+            var ok = 0;
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select email from Users', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+                    console.log(row.email);
+                    if (row.email == userInfo.userEmail) {
+                        ok++;          //daca am gasit un user cu acelasi email, incrementam ok.
+                    }
+                });
+                console.log(ok);
+                if (ok == 0) {                    //Daca emailul e unic, deci facem user
+                    console.log("Exista user");
+                    session.userName = userInfo.userName;
+                    session.email = userInfo.userEmail;
+                    session.password = userInfo.userPassword;           //si trecem userul in sesiune
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.write(ok.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit user cu acelasi email).
+                res.end();
+            });
+            db.close();
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //requestul de LOGOUT, care vine de la BoRe_home, intrucat aici ajungi cand apesi butonul de Log Out 
     if (req.url == '/logoutRequest') {
         var loginInfo = '';
@@ -408,6 +490,329 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //requestul de Search, folosit ca sa cautam carti
+    if (req.url === '/searchRequest') {
+        console.log("DA FAQ?");
+        var receivedData = '';
+        var convert;
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+            convert = JSON.parse(receivedData);
+            receivedData = convert;
+
+            var htmlString = '';   //o sa creem un html cu cartile gasite, ce va fi apoi introdus in pagina
+
+            // cautam cartile
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select ID, Title, Author, Genre, Rating, NrPag, Publisher, Edition, Cover from Books', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+                    if (receivedData.searchCriterium == 'Books') {                  //daca avem de cautat carti dupa titlu
+                        if (row.Title.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
+                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
+                        }
+                    }
+
+
+                    else if (receivedData.searchCriterium == 'By Author') {            //daca avem de cautat dupa autor
+                        if (row.Author.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
+                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
+                        }
+                    }
+
+
+                    else if (receivedData.searchCriterium == 'By Genre') {             //daca avem de cautat dupa gen
+                        if (row.Genre.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
+                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
+                        }
+                    }
+                });
+                res.setHeader('Content-Type', 'application/json');
+                res.write(htmlString);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+            db.close();
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //requestul de What's Hot, care iti arata cele mai bine cotate 30 de carti dintr-un anumit gen;
+    if (req.url === '/hotRequest') {
+        console.log("DA FAQ?");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text, anume genul ales
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+
+            var htmlString = '';   //o sa creem un html cu cartile gasite, ce va fi apoi introdus in pagina
+            var hotBooks = [];       //un vector in care vom sorta cartile
+            var aux;
+            var indice = 0;
+
+            // cautam cartile
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select ID, Title, Author, Genre, Rating, NrPag, Publisher, Edition, Cover from Books', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+
+                    if (receivedData == 'All') {                  //daca avem de cautat carti de toate genurile
+                        hotBooks[indice] = {
+                            ID: row.ID,
+                            Title: row.Title,
+                            Author: row.Author,
+                            Genre: row.Genre,
+                            Rating: row.Rating,
+                            nrPag: row.nrPag,
+                            Publisher: row.Publisher,
+                            Edition: row.Edition,
+                            Cover: row.Cover
+                        }
+                        indice++;
+                    }
+
+                    else {             //daca avem de cautat dupa un gen anume
+                        if (row.Genre.toLowerCase().indexOf(receivedData.toLowerCase()) != -1) {
+                            hotBooks[indice] = {
+                                ID: row.ID,
+                                Title: row.Title,
+                                Author: row.Author,
+                                Genre: row.Genre,
+                                Rating: row.Rating,
+                                nrPag: row.nrPag,
+                                Publisher: row.Publisher,
+                                Edition: row.Edition,
+                                Cover: row.Cover
+                            }
+                            indice++;
+                        }
+                    }
+
+                });
+                db.close();
+                for (i = 0; i < indice; i++)
+                    for (j = i; j < indice; j++)
+                        if (hotBooks[i].Rating < hotBooks[j].Rating) {
+                            aux = hotBooks[i];
+                            hotBooks[i] = hotBooks[j];
+                            hotBooks[j] = aux;
+                        }
+
+                for (i = 0; i < indice; i++) {
+                    if (i < 30) {
+                        htmlString += '<div class="card text "><h3><u>' + hotBooks[i].Title + '</u></h3>';
+                        htmlString += '<div class=cardBody>';
+                        htmlString += '<a href="Book_Page1.1.html">';
+                        htmlString += '<img class="bookImage" src="' + hotBooks[i].Cover + '"></a>';
+                        htmlString += '<div class="containedText">';
+                        htmlString += '<p class ="hiddenID">' + hotBooks[i].ID + '</p>';
+                        htmlString += '<p>⤷ Rating: ' + hotBooks[i].Rating + '/5</p>';
+                        htmlString += '<p>⤷ Author: ' + hotBooks[i].Author + '</p>';
+                        htmlString += '<p>⤷ Genre: ' + hotBooks[i].Genre + '</p>';
+                        htmlString += '</div></div></div>';
+                    }
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.write(htmlString);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
+
+
+
+
+
+
+    //requestul de Find User, folosit ca sa cautam useri, in Pagina Users_Followed1.1.html
+    if (req.url === '/findUserRequest') {
+        console.log("DA FAQ?");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+
+            var htmlString = '';   //o sa creem un html cu cartile gasite, ce va fi apoi introdus in pagina
+            var usersFound = [];       //un vector in care vom sorta cartile
+            var aux;
+            var indice = 0;
+
+            // cautam cartile
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select ID, Name, email, Photo from Users', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+
+                    if (row.Name.toLowerCase().indexOf(receivedData.toLowerCase()) != -1 || row.email.toLowerCase().indexOf(receivedData.toLowerCase()) != -1) {
+                        usersFound[indice] = {
+                            ID: row.ID,
+                            Name: row.Name,
+                            email: row.email,
+                            Photo: row.Photo
+                        };
+                        indice++;
+                    }
+
+                });
+                db.close();
+                for (i = 0; i < indice; i++)
+                    for (j = i; j < indice; j++)
+                        if (usersFound[i].Name.toLowerCase() > usersFound[j].Name.toLowerCase()) {
+                            aux = usersFound[i];
+                            usersFound[i] = usersFound[j];
+                            usersFound[j] = aux;
+                        }
+
+                for (i = 0; i < indice; i++) {
+                    htmlString += '<div class="usersFound">';
+                    htmlString += '<img src="' + usersFound[i].Photo + '">';
+                    htmlString += '<p class="hiddenID">' + usersFound[i].ID + '</p>';
+                    htmlString += '<p class="text">' + usersFound[i].Name + '</p>';
+                    htmlString += '<p class="text">' + usersFound[i].email + '</p>';
+                    htmlString += '<p><button class="viewUserButton">View User</button></p></div>';
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.write(htmlString);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //requestul de Find Group, folosit ca sa cautam grupuri, in Pagina My_Groups1.1.html
+    if (req.url === '/findGroupRequest') {
+        console.log("DA FAQ?");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+
+            var htmlString = '';   //o sa creem un html cu cartile gasite, ce va fi apoi introdus in pagina
+            var groupsFound = [];       //un vector in care vom sorta cartile
+            var aux;
+            var indice = 0;
+
+            // cautam cartile
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select ID, Name, Picture from Groups', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+
+                    if (row.Name.toLowerCase().indexOf(receivedData.toLowerCase()) != -1) {
+                        groupsFound[indice] = {
+                            ID: row.ID,
+                            Name: row.Name,
+                            email: row.email,
+                            Picture: row.Picture
+                        };
+                        indice++;
+                    }
+
+                });
+                db.close();
+                for (i = 0; i < indice; i++)
+                    for (j = i; j < indice; j++)
+                        if (groupsFound[i].Name.toLowerCase() > groupsFound[j].Name.toLowerCase()) {
+                            aux = groupsFound[i];
+                            groupsFound[i] = groupsFound[j];
+                            groupsFound[j] = aux;
+                        }
+
+                for (i = 0; i < indice; i++) {
+                    htmlString += '<div class="groupsFound">';
+                    htmlString += '<img src="' + groupsFound[i].Picture + '">';
+                    htmlString += '<p class="hiddenID">' + groupsFound[i].ID + '</p>';
+                    htmlString += '<p class="text aliniatOleaca">' + groupsFound[i].Name + '</p>';
+                    htmlString += '<p><button class="viewGroupButton">View Group</button></p></div>';
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.write(htmlString);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
 
 
 });

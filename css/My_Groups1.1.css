@@ -317,3 +317,7 @@ footer{
      flex-direction: column;
      align-items:center;
  }
+
+ .hiddenID{  /* o sa avem nevoie de ID pt requesturi, dar nu e cazul sa il si afisam in pagina*/
+    display:none;
+}

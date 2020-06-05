@@ -245,3 +245,6 @@ footer{
     box-shadow: 0 0 5px 20px rgb(107, 106, 106);
 }
 
+.hiddenID{  /* o sa avem nevoie de ID pt requesturi, dar nu e cazul sa il si afisam in pagina*/
+    display:none;
+}
