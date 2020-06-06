@@ -1,10 +1,6 @@
-reviewButton=document.getElementById('reviewButton');
-reviewDiv =document.getElementById('reviewDiv');
-cancelButton = document.getElementById("cancel");
-
-window.onload = function(event) {
+/*window.onload = function(event) {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", "/initiateBook_Page");
+    xmlhttp.open("GET", "/initiateMy_Account");
     xmlhttp.onload = function() {
         var bookData = JSON.parse(xmlhttp.responseText);
         var everythingAboutBook=document.getElementById("everythingAboutBook");
@@ -41,17 +37,4 @@ window.onload = function(event) {
     };
     xmlhttp.send("1");
     
-}
-
-reviewButton.onclick=function(){
-    if(reviewDiv.style.display=="flex")
-     reviewDiv.style.display='none';
-     else reviewDiv.style.display='flex';
-
-}
-
-cancelButton.onclick=function(){
-    var reviewTextArea=document.getElementById("reviewTextArea");
-    reviewTextArea.value='';
-    reviewDiv.style.display='none';
-}
+}*/

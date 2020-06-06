@@ -8,7 +8,9 @@ const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./dataBase/DB.db');
 
 /*sesiune*/
-var session = { userName: '', email: '', password: '' };
+var session = { userID: ' ', userName: '', email: '', password: '' };
+var bookID = -1;  //variabila globala ce retine ID-ul unei carti, pentru a sti ce sa incarce in Book_Page1.1.html
+var userID = -1; //variabila globala ce retine ID-ul unui User, pentru a sti ce sa incarce in MY_Account1.1.html
 
 //css-urile si js-urile paginilor + coperta cartii
 
@@ -30,7 +32,8 @@ const usersFollowedjs = fs.readFileSync("./js/Users_followed1.1.js", "UTF8");
 const myGroupsjs = fs.readFileSync("./js/My_Groups1.1.js", "UTF8");
 const groupPagejs = fs.readFileSync("./js/Group_Page1.1.js", "UTF8");
 const newAccountjs = fs.readFileSync("./js/New_Account1.1.js", "UTF8");
-const whatSHotjs = fs.readFileSync("./js/What's_Hot1.1.js", "UTF8");
+const whatSHotjs = fs.readFileSync("./js/What's_Hot1.1.js", "UTF8");                   
+const myAccountjs = fs.readFileSync("./js/My_Account1.1.js", "UTF8");
 
 
 
@@ -171,6 +174,12 @@ var server = http.createServer(function (req, res) {
     if (req.url === '/css/My_Account1.1.css') {
         res.writeHead(200, { 'Content-Type': 'text/css' });
         res.write(myAccountCSS);
+        res.end();
+    }
+
+    if (req.url === '/js/My_Account1.1.js') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(myAccountjs);
         res.end();
     }
 
@@ -377,7 +386,7 @@ var server = http.createServer(function (req, res) {
 
             var ok = 0;
             let db = new sqlite3.Database('./dataBase/DB.db');
-            db.all('select Name, email, password from Users', [], (err, rows) => {
+            db.all('select Name, email, password, ID from Users', [], (err, rows) => {
                 if (err) {
                     throw err;
                 }
@@ -386,6 +395,7 @@ var server = http.createServer(function (req, res) {
                     console.log(row.email);
                     console.log(row.password);
                     if (row.Name == userInfo[0] && row.email == userInfo[1] && row.password == userInfo[2]) {
+                        session.userID = row.ID;
                         ok++;          //daca am gasit userul, incrementam ok.
                     }
                 });
@@ -395,6 +405,7 @@ var server = http.createServer(function (req, res) {
                     session.userName = userInfo[0];
                     session.email = userInfo[1];
                     session.password = userInfo[2];           //si trecem userul in sesiune
+
                 }
                 res.setHeader('Content-Type', 'application/json');
                 res.write(ok.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
@@ -481,6 +492,7 @@ var server = http.createServer(function (req, res) {
             loginInfo += chunk;
         });
         session.userName = '';
+        session.userID = '';
         session.email = '';
         session.password = '';
         console.log(session.userName);
@@ -529,7 +541,7 @@ var server = http.createServer(function (req, res) {
                 rows.forEach((row) => {                 //verificam fiecare row daca corespunde
                     if (receivedData.searchCriterium == 'Books') {                  //daca avem de cautat carti dupa titlu
                         if (row.Title.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
-                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<div class="book"><img class="bookImage" src="' + row.Cover + '"><p class="hiddenID">' + row.ID + '</p>'
                             htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
                         }
                     }
@@ -537,7 +549,7 @@ var server = http.createServer(function (req, res) {
 
                     else if (receivedData.searchCriterium == 'By Author') {            //daca avem de cautat dupa autor
                         if (row.Author.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
-                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<div class="book"><img class="bookImage" src="' + row.Cover + '"><p class="hiddenID">' + row.ID + '</p>'
                             htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
                         }
                     }
@@ -545,7 +557,7 @@ var server = http.createServer(function (req, res) {
 
                     else if (receivedData.searchCriterium == 'By Genre') {             //daca avem de cautat dupa gen
                         if (row.Genre.toLowerCase().indexOf(receivedData.searchName.toLowerCase()) != -1) {
-                            htmlString += '<div class="book"><a href="Book_Page1.1.html"><img class="bookImage" src="' + row.Cover + '"></a><p class="hiddenID">' + row.ID + '</p>'
+                            htmlString += '<div class="book"><img class="bookImage" src="' + row.Cover + '"><p class="hiddenID">' + row.ID + '</p>'
                             htmlString += '<p> Title: ' + row.Title + ' <br> Author: ' + row.Author + ' <br> Genre: ' + row.Genre + '<br> Rating: ' + row.Rating + '</p></div>';
                         }
                     }
@@ -810,14 +822,188 @@ var server = http.createServer(function (req, res) {
         req.on('error', (error) => {
             console.error(error);
         });
-    }
+    };
 
 
+
+
+
+
+
+
+
+    //requestul care primeste ID-ul unei carti, pentru a prelua informatia din tabel si a o incarca in pagina Book_Page1.1.html
+    if (req.url == '/sendBookID') {
+        var receivedID = '';
+        req.on('data', function (chunk) {
+            receivedID += chunk;
+        });
+
+
+        req.on('end', () => {
+            bookID = receivedID;
+            console.log(bookID);
+            res.setHeader('Content-Type', 'application/json');
+            res.write('OK');                  //trimitem raspuns la client, ca asa-i frumos.
+            res.end();
+        });
+    };
+
+
+
+
+
+
+
+    //requestul de incarcare pt Book_Page1.1.html, caruia ii vom furniza informatii despre carti.
+    if (req.url === '/initiateBook_Page') {
+        console.log("DA FAQ?");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+
+            var bookInfo = {    //ce o sa preluam noi din tabel
+                ID: bookID,
+                Title: '',
+                Author: '',
+                Genre: '',
+                Rating: '',
+                NrPag: '',
+                Publisher: '',
+                Edition: '',
+                Cover: '',
+                Review: []
+            };
+
+            var i = 0;
+            console.log(bookID);
+
+            // cautam cartea
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            let sql = 'select Books.ID, Books.Title, Books.Author, Books.Genre, Books.Rating, Books.NrPag, Books.Publisher, Books.Edition, Books.Cover, My_Books.Review, My_Books.UserID, Users.Name, Users.Photo from Books LEFT OUTER JOIN My_Books on Books.ID=My_Books.BookID left outer join Users on My_Books.UserID=Users.ID where Books.ID = ?';
+            let parametru = bookID;
+            db.all(sql, [parametru], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+
+                    bookInfo.Title = row.Title;
+                    bookInfo.Author = row.Author;
+                    bookInfo.Genre = row.Genre;
+                    bookInfo.Rating = row.Rating;
+                    bookInfo.NrPag = row.NrPag;
+                    bookInfo.Publisher = row.Publisher;
+                    bookInfo.Edition = row.Edition;
+                    bookInfo.Cover = row.Cover;
+
+                    if (row.Review != 'N/A' && row.Review != null) {
+                        console.log(row.Review);
+                        bookInfo.Review[i] = {
+                            userID: row.UserID,
+                            userName: row.Name,
+                            userPhoto: row.Photo,
+                            userReview: row.Review
+                        }
+                        i++;
+                    }
+                });
+                db.close();
+                var data = JSON.stringify(bookInfo);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+
+
+
+
+
+    //requestul de get usersfollowed, care incarca in pagina Users_Followed1.1.
+    if (req.url === '/getUsersFollowed') {
+        console.log("DA FAQ?");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+
+            var usersFound = [];
+
+            var i = 0;
+            console.log(bookID);
+
+            // cautam useri
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            let sql = 'select Users_Followed.UserID, Users_Followed.Followed_UserID, Users.ID, Users.Name, Users.Photo from Users_Followed INNER JOIN Users on Users_Followed.Followed_UserID=Users.ID where Users_Followed.UserID = ?';
+            let parametru = session.userID;
+            db.all(sql, [parametru], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    usersFound[i]={
+                        userID : row.Followed_UserID,
+                        userName : row.Name,
+                        userPhoto : row.Photo 
+                    };
+                    i++;
+                });
+                db.close();
+                var data = JSON.stringify(usersFound);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);                  //trimitem stringul html la sursa;
+                res.end();
+            });
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+
+
+        //requestul care primeste ID-ul unui user, pentru a prelua informatia din tabel si a o incarca in pagina My_Account1.1.html
+        if (req.url == '/sendUserID') {
+            var receivedID = '';
+            req.on('data', function (chunk) {
+                receivedID += chunk;
+            });
+    
+    
+            req.on('end', () => {
+                userID = receivedID;
+                console.log(userID);
+                res.setHeader('Content-Type', 'application/json');
+                res.write('OK');                  //trimitem raspuns la client, ca asa-i frumos.
+                res.end();
+            });
+        };
 
 
 });
 
-server.listen(3000, '127.0.0.1');              //punem serveruls a asculte la localhost, portul 3000
+server.listen(3000, '127.0.0.1');              //punem serverul sa asculte la localhost, portul 3000
 console.log('Server Activated');               //cand serverul e activat, va afias acest mesaj in consola
 
 

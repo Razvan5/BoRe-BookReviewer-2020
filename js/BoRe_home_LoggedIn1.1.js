@@ -50,5 +50,21 @@ clearButton.onclick=function(){                                   //cand dam cli
     searchResults.style.display="none";
 }
 
-
+window.onclick=function(event){
+    if(event.target.matches(".bookImage")){
+        var book = event.target;
+        var parinte=book.parentNode;
+        var bookID=parinte.children[1];            //preluam ID-ul cartii, care e hidden
+        bookID2=bookID.innerText;
+        var sendBookID = new XMLHttpRequest();                        //facem un request
+        sendBookID.open('POST', '/sendBookID');
+        sendBookID.setRequestHeader("Content-Type", "application/javascript");
+        sendBookID.onload = function () {
+           if(sendBookID.responseText=="OK")
+           window.location.href="Book_Page1.1.html";
+        };
+    
+        sendBookID.send(bookID2.toString());
+}
+};
 
