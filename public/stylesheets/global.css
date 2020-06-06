@@ -77,7 +77,6 @@ header{
   padding: 1em;
   transition: background-color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   z-index:50;
-  margin-left:0.5vh;
 }
 .custom-links.header:hover{
   transition: background-color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -113,7 +112,7 @@ header{
   flex-direction: column;
   height: auto;
   background-color: #322924;
-  /* display: none; */
+  display: none;
   z-index:50;
 }
 #account{
@@ -280,6 +279,21 @@ footer{
   width: 25vw;
   display: flex;
   flex-direction: column;
+}
+#account-wrapper .custom-links {
+  width:auto;
+  height:auto;
+  text-decoration: none;
+  color: #ffcf6e;
+  background-color: #322924;
+  padding: 1vmin;
+  transition: background-color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#account-wrapper .custom-links:hover{
+  width:auto;
+  height:auto;
+  transition: background-color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  background-color:#4e4744 ;
 }
 .custom-links.footer{
   width:auto;

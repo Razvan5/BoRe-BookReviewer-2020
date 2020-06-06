@@ -16,3 +16,18 @@ optionsList.forEach(o => {
   });
 });
 
+var i=true;
+function read(){
+  if(i==true){
+    document.getElementById("more").style.display="inline";
+    document.getElementById("dots").style.display="none";
+    document.getElementById("read-more-btn").innerHTML="Read Less";
+    i=false;
+  }
+  else{
+    document.getElementById("read-more-btn").innerHTML="Read More";
+    document.getElementById("more").style.display="none";
+    document.getElementById("dots").style.display="inline";
+    i=true;
+  }
+};
