@@ -84,6 +84,12 @@
     width:100%;
     height:auto;
     box-shadow: 3px 3px 3px #00000082;   
+    transition:top 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    top:0;
+}
+.book-cover:hover{
+    top: -1em;
 }
 .shelf{
     padding:0px;

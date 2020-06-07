@@ -1,4 +1,4 @@
-.account-settings{
+.group-settings{
     
     margin-top: 10vh;
     margin-bottom: 10vh;
@@ -11,7 +11,7 @@
     flex-direction: column;
 }
 @media only screen and (max-width: 700px) {
-    .account-settings{
+    .group-settings{
         margin-top:20vh;
     }
 }
@@ -29,8 +29,7 @@
 #details{
     resize:none;
 }
-#account-image{
-    border-radius: 50%;
+#group-image{
     width: 15vmin;
 }
 #upload-image{
