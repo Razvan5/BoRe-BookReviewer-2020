@@ -7,6 +7,9 @@ var path = require('path');
 const sqlite3 = require('sqlite3').verbose();              //pentru baza de date
 
 
+var connectedUsers=[];   //useri conectati
+var connectedUsersNr=0;
+
 
 //imagini:
 const siteImages = ["/images/arches.png", "/images/arrow-down.png", "/images/book-cover.png", "/images/bookmarks.png", "/images/diagmonds.png", "/images/diagmonds-light.png",
@@ -20,7 +23,7 @@ const siteStylesheets = ["/stylesheets/about-us.css", "/stylesheets/account.css"
      "/stylesheets/notifications.css","/stylesheets/privacy.css", "/stylesheets/recomandation.css", "/stylesheets/register.css", "/stylesheets/singlebooktemplate.css", "/stylesheets/terms.css"];
 
 //javascripturi
-const siteJavaScripts = ["/javascripts/account.js","/javascripts/global.js","/javascripts/group.js", "/javascripts/recomandations.js", "/javascripts/singlebooktemplate.js"];
+const siteJavaScripts = ["/javascripts/account.js","/javascripts/global.js","/javascripts/group.js","/javascripts/login.js", "/javascripts/recomandations.js", "/javascripts/singlebooktemplate.js"];
 
 
 //aici este serverul
@@ -190,6 +193,83 @@ var server = http.createServer(function (req, res) {
     }
 
     //////////////////////Sfarsitul requesturilor scurte////////////////////
+
+
+        ////////////Requesturile lungi, care trateaza functionalitati ale paginilor/////////////////
+
+    //requestul de LOGIN, care vine de la javascripts/login.js
+    if (req.url === '/loginRequest') {
+        console.log("DA FAQ?");
+        var loginInfo = '';
+        var userInfo;
+        req.on('data', function (chunk) {
+            loginInfo += chunk;
+        });
+        req.on('end', () => {
+            userInfo = JSON.parse(loginInfo);
+            console.log(loginInfo);
+            console.log(userInfo.email); //email
+            console.log(userInfo.password); //password
+
+
+
+            // cautam userul in baza de date
+
+            var userID = -1;
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select Name, email, password, ID from Users', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+                    console.log(row.Name);
+                    console.log(row.email);
+                    console.log(row.password);
+                    if (row.email == userInfo.email && row.password == userInfo.password) {
+                        connectedUsers[connectedUsersNr]={
+                            ID : row.ID,
+                            email : row.email,
+                            password : row.password
+                        }
+                        userID=row.ID;
+                        connectedUsersNr++;
+                    }
+                });
+                console.log(userID);
+                if (userID!= -1) {                    //Daca am gasit userul, acceptam conexiunea
+                    console.log("Exista user");
+                }
+                console.log(userID);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(userID.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
+                res.end();
+            });
+            db.close();
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+        //requestul Check Login, care vine de la toate paginile ce necesita ca userul sa fie conectat 
+        if (req.url == '/checkLogin') {
+            var userID = '';
+            req.on('data', function (chunk) {
+                userID += chunk;
+            });
+            
+            req.on('end', () => {
+                console.log(userID);
+                var ok=0;
+                for(i=0;i<connectedUsers.length;i++){
+                    if(connectedUsers[i].ID==userID)
+                    ok=1;
+                }
+                res.setHeader('Content-Type', 'application/json');
+                res.write(ok.toString());                  //trimitem raspuns la client
+                res.end();
+            });
+        };
 
 });
 
