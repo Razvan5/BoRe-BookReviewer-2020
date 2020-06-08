@@ -10,7 +10,8 @@ const sqlite3 = require('sqlite3').verbose();              //pentru baza de date
 
 //imagini:
 const siteImages = ["/images/arches.png", "/images/arrow-down.png", "/images/book-cover.png", "/images/bookmarks.png", "/images/diagmonds.png", "/images/diagmonds-light.png",
-    "/images/facebook.png", "/images/google.png", "/images/loginBook.png", "/images/logo.png", "/images/logo-light.png", "/images/lowerBooCase.png", "/images/notebook.png", "/images/profile.png",
+    "/images/facebook.png", "/images/google.png","/images/help1.png","/images/help2.png","/images/help3.png","/images/help4.png","/images/help5.png","/images/help6.png","/images/help7.png",
+    "/images/help8.png","/images/help9.png","/images/loginBook.png", "/images/logo.png", "/images/logo-light.png", "/images/lowerBooCase.png", "/images/notebook.png", "/images/profile.png",
     "/images/registerBook.png", "/images/shattered.png", "/images/shelf.png", "/images/solaris-cover.png", "/images/twitter.png"];
 
 //css-uri:
@@ -129,7 +130,7 @@ var server = http.createServer(function (req, res) {
     }
 
     //request pentru index.html
-    if (req.url === "/pages/index.html" || req.url === "/index"|| req.url === "/index.html") {
+    if (req.url === "/BookWormhole" ||req.url === "/pages/index.html" || req.url === "/index"|| req.url === "/index.html") {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         fs.createReadStream('pages/index.html').pipe(res);
     }

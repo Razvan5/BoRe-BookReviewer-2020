@@ -36,3 +36,7 @@
     background-color: rgb(220, 20, 60);
     clip-path: polygon(100% 0, 100% 100%, 50% 60%, 0 100%, 0 0);
 }
+
+.scholarly{
+    max-width: 90vw;
+}
