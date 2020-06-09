@@ -20,8 +20,6 @@ submitButton.onclick=function(){
         console.log(loginRequest.responseText);
         var ok=loginRequest.responseText;
         if(ok>0){
-            document.cookie='userIDCookie= ';
-            document.cookie= 'userIDCookie='+loginRequest.responseText+';';
             console.log(document.cookie.toString());
             var receiveduserID=document.cookie.toString();
             receiveduserID2=receiveduserID.split('=')[1];

@@ -21,14 +21,15 @@ body{
     font-size: 3vmin;
     color:#FFFFF0;
     overflow: hidden;
-
   }
 .background-wrapper{
     /*No annoynig extra spacing*/
     margin:0px;
+    margin-top: 5vh;
+    margin-bottom: 30vmin;
     padding:0px;
     /* Full height adn width*/    
-    height:100vh;
+    height:80vmin;
     width:100vw;
     /*Centering the register form background*/
     display: flex;
@@ -36,23 +37,24 @@ body{
     align-items: center;
     
 }
+
 #background-register{
     /*No annoynig extra spacing*/
     margin:0px;
     padding:0px;
     /*Size*/
-    height:70vh;
-    width:70vw;
+    height:70vmin;
+    width:70vmin;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     /* border: 1px solid red; */
 }
 #background-image{
     /*No annoynig extra spacing*/
     margin:0px;
-    margin-left:5vw;
     padding:0px;
     /*Size*/
     height:100%;
@@ -62,18 +64,40 @@ body{
     filter: drop-shadow(10px 10px 20px #222);
     -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
     filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+
+}
+#title{
+    padding:0.1em;
+    font-size: 3.5vmin;
+    margin-bottom:5vh;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgb(27, 27, 27), 
+    2px 2px 0 rgb(0, 0, 0);
+    border-bottom:0.1em solid rgb(255, 255, 255);
+}
+#book-wrapper{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height:40vmin;
+    width: 40vmin;
 }
 #register-form{
     /*No annoynig extra spacing*/
     margin:0px;
     padding:0px;
     /*Size*/
-    /* height:40vh; */
-    /* width:40vh; */
+    height:40vmin;
+    width:40vmin;
+    font-size: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    /* border:3px solid blue; */
 }
 #register-form-wrapper{
 
@@ -84,22 +108,22 @@ body{
     height:40vh;
     width:40vh;
     /*Position on image*/
-    position: absolute;
     /*Flex-centering*/
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
     /* border: 1px solid red; */
 
 }
 .register-input{
     /*Extra spacing*/
-    margin: 0px;
+    margin:0px;
     margin-bottom:3vh;
     padding:0px;
     /*Size*/
     height:4vmin;
-    width:30vh;
+    width:100%;
     /*Text-style*/
     text-align: center;
     font-family: Times Roman, sans-serif;
@@ -130,35 +154,14 @@ body{
     background-color: rgb(255, 177, 59);
     color:#ffffff ;
 }
-#title-wrapper{
-    /*No annoynig extra spacing*/
-    margin:0px;
-    padding:0px;
-    /* Full height adn width*/    
-    height:60vh;
-    width:60vh;
-    display: flex;
-    justify-content: center;
-    /* border:1px solid red; */
-    position: absolute;
-}
-#title{
-    padding:0.1em;
-    font-size: 4vmin;
-    position: absolute;
-    text-align: center;
-    text-shadow: 1px 1px 0 rgb(27, 27, 27), 
-    2px 2px 0 rgb(0, 0, 0);
-    border-bottom:0.1em solid rgb(255, 255, 255);
-}
 footer{
 
-    position: sticky;
-    bottom: 0px;
+    bottom:0;
+    position: absolute;
     background: url('../images/lowerBooCase.png');
 	background-size: contain;
-    height: 3.5em;
-    width:100%;
+    height: 8vmin;
+    width:100vw;
 	background-repeat: repeat-x;
     background-position: bottom;
     display: flex;
@@ -189,15 +192,14 @@ footer{
 .register-another-site-wrapper{
     /*No annoynig extra spacing*/
     margin:0px;
+    height: 90%;
     padding:0px;
-    height:40vh;
-    width: 10vh;
+    width: 10vmin;
     z-index: 2;
     position: relative;
-    top:-10vh;
 }
 .register-another-site{
-    height:10vh;
+    height:10vmin;
     width:auto;
     -webkit-filter: drop-shadow(5px 5px 10px rgb(135, 135, 135));
      filter: drop-shadow(0.3em 1.5em 1.3em rgb(88, 88, 88));
@@ -226,16 +228,15 @@ footer{
     left:100%
 }
 header{
-    position: fixed;
+    position: relative;
     height: 10vh;
-    /* ??? */
-    width:110vw;
+    width:100vw;
     display:flex;
     justify-content: center;
     align-items:center;
-    margin-left:-4vw;
 
-    border-bottom: 1vh solid #94856E;
+    background-color:#4c3b32;
+    border-bottom: 1vmin solid #222;
 
     text-transform: uppercase;
     font-family: verdana;
@@ -261,18 +262,20 @@ header{
 
 #submit-button{
     padding-bottom: 25%;
-    margin-top:46.5vh;
-    margin-left:10vh ;
+    height:5vmin;
+    width: 10vmin;
+    position: absolute;
+    top:88%;
+
     color:#f5f5f5;
+    
     font-family: Times Roman,sans-serif;
     font-size: 2vmin;
-    height:15vmin;
     background-color: rgb(220, 20, 60);
     border: none;
-    position: absolute;
     clip-path: polygon(100% 0, 100% 100%, 50% 60%, 0 100%, 0 0);
     transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    z-index: 10;
+    z-index: 100;
 }
 #submit-button:hover{
     height:18vmin;
@@ -281,4 +284,8 @@ header{
 #terms-and-conditions{
     margin-top:1em;
     font-size:1.8vmin;
+}
+#logo{
+    height:9vmin;
+    width:auto
 }

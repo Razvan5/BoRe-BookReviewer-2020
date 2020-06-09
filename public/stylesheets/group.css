@@ -13,6 +13,7 @@
     flex-direction: column;
 }
 .group-manage{
+    margin-top:10vh;
     display: flex;
     height:auto;
     min-height: 10vh;
@@ -27,13 +28,29 @@
     height: auto;
     border-radius: 5vmin;
 }
+.messages{
+    background-color: #f4f4f4;
+    min-height: 60vh;
+    height:auto;
+    width: 100%;
+    display: flex;
+}
+.description{
+    display: initial;
+}
+.members{
+    background-color: #f4f4f4;
+    min-height: 60vh;
+    height:auto;
+    width: 100%;
+    display: flex;
+}
 /*join button*/
 .join-btn{
     background-color: #ffaa00;
     border:none;
     padding:1vmin;
     font-size: 1em;
-    height:auto;
     transition:background-color 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     cursor: pointer;
     color:#454545;
@@ -90,12 +107,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height:5vmin;
     margin-right: 1vmin;
 }
-.group-btn a:hover{
+.group-btn:hover{
     background-color: #ffaa00;
 }
-.group-btn a{
+.group-btn{
     background-color: #ffa24a;
     color: #ffcf6e;
     text-decoration: none;
@@ -216,3 +234,4 @@
     width: 100%;
     position: relative;
 }
+

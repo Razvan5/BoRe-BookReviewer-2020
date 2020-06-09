@@ -4,43 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../stylesheets/register.css">
-    <script src="https://kit.fontawesome.com/0ca67d7a6d.js" crossorigin="anonymous"></script>    <title>PaperFeed</title>
+    <!-- <link rel="stylesheet" href="../stylesheets/global.css"> -->
+    <script src="https://kit.fontawesome.com/0ca67d7a6d.js" crossorigin="anonymous"></script>    
+    <title>Bookwormhole</title>
 </head>
 <body>
-    <header>PaperFeed</header>
+    <header><img src="../images/logo-light.png" alt="Logo" id="logo"></header>
+
     <div class="background-wrapper">
+
         <div id="background-register">
            <img src="../images/registerBook.png" alt="register-book" id="background-image">
-           <div id="title-wrapper">
-           <div id="title">Sign in to PaperFeed</div>
-           </div>
-           <div id="register-form-wrapper">
-               <form action="register" method="post" id="register-form">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" class="register-input">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="register-input">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="register-input">
-                    <span id="terms-and-conditions">By clicking “Create Account” I agree to the Paperfeed Terms of Service and confirm that I am at least 13 years of age. Read our Privacy Policy.                    </span>
-               </form>
-               <input type="submit" value="Create Account" id="submit-button">
-           </div>
+
+            <div id="book-wrapper">
+                <div id="title">
+                    Sign in to Bookwormhole
+                </div>
+                <div id="register-form-wrapper">
+                    <form action="register" method="post" id="register-form">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="register-input">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="register-input">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="register-input">
+                    </form>
+                </div>
+            </div>
+            <input type="submit" value="Register" id="submit-button">
+
            <div class="register-another-site-wrapper">
-            <!-- <div class="register-another-site-icons">
-                <i class="fab fa-facebook-f font-awesome"></i>
-                <i class="fab fa-twitter font-awesome"></i>
-                <i class="fab fa-google font-awesome"></i>
-            </div> -->
             <img src="../images/facebook.png" alt="register-facebook" class="register-another-site">
             <img src="../images/twitter.png" alt="register-twitter" class="register-another-site">
             <img src="../images/google.png" alt="register-google" class="register-another-site">
             </div>
         </div>
+
     </div>
+    
     <footer>
         © 2020 PaperFeed Inc
-        <!-- <img src="../images/lowerBooCase.png" alt="register-bookcase" id="footer-background-image"> -->
     </footer>
 </body>
 </html>

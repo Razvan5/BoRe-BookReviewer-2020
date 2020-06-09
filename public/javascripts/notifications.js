@@ -1,4 +1,5 @@
 window.onload=function(){
+  console.log(document.cookie.toString());
     var receiveduserID=document.cookie.toString();
     receiveduserID2=receiveduserID.split('=')[1];
     console.log(receiveduserID2);
