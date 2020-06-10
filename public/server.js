@@ -3,6 +3,7 @@ var util = require('util');
 var fs = require("fs");
 const qs = require('qs');
 var http = require('http');
+var https = require('https');
 var path = require('path');
 const sqlite3 = require('sqlite3').verbose();              //pentru baza de date
 
@@ -24,12 +25,13 @@ const siteStylesheets = ["/stylesheets/about-us.css", "/stylesheets/account.css"
 
 //javascripturi
 const siteJavaScripts = ["/javascripts/account.js", "/javascripts/account-edit.js", "/javascripts/bookfeed.js", "/javascripts/comunity.js", "/javascripts/friends.js", "/javascripts/genres.js", "/javascripts/global.js", "/javascripts/group.js", "/javascripts/group-edit.js",
-    "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js", "/javascripts/recomandations.js","/javascripts/search.js", "/javascripts/singlebooktemplate.js"];
+    "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js", "/javascripts/recomandations.js", "/javascripts/search.js", "/javascripts/singlebooktemplate.js"];
 
 
 //aici este serverul
 var server = http.createServer(function (req, res) {
     console.log('request was made ' + req.url);
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
     //////////////////Intai avem requesturile scurte, pentru incarcarea paginilor si imaginilor//////////////////
 
@@ -286,8 +288,8 @@ var server = http.createServer(function (req, res) {
         });
     };
 
-});
 
+});
 server.listen(3000, '127.0.0.1');              //punem serverul sa asculte la localhost, portul 3000
 console.log('Server Activated');               //cand serverul e activat, va afias acest mesaj in consola
 
