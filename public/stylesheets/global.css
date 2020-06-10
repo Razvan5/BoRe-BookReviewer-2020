@@ -120,7 +120,7 @@ header{
   justify-content: space-between;
   align-items: center;
   height: 70%;
-  width: 18%;
+  width: 20%;
   display: flex;
   /* border:3px solid red; */
 }
@@ -375,6 +375,10 @@ footer{
   100%{
     transform:rotateZ(0deg);
   }
+}
+/*!atentie clasa folosita pentru a ascunde obiecte o poti adauga la orice*/
+.hidden-button{
+  display:none;
 }
 
 
