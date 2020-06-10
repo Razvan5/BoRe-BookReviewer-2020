@@ -191,7 +191,8 @@ window.onload = function () {
       var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       var ourRequest = new XMLHttpRequest();
       var mode = ourRequest.mode = 'no-cors';
-      ourRequest.open('GET', proxyUrl + 'https://www.goodreads.com/search.xml?key=WpM1JNzR4jTVMnsH26tqcg&q='+randomChar()+'&field=all&page='+Math.floor(Math.random() * 7));
+      var number=(Math.floor(Math.random() * 7)+1);
+      ourRequest.open('GET', proxyUrl + 'https://www.goodreads.com/search.xml?key=WpM1JNzR4jTVMnsH26tqcg&q='+randomChar()+'&field=all&page='+number);
       ourRequest.onload = function () {
         var singleBook = ourRequest.responseText.split('<work>');    //impartim xml-ul in carti
         var ourData = ourRequest.responseText;
