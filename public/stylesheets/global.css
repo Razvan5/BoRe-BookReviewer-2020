@@ -18,8 +18,8 @@
 /* MOZILLA */
 html{
     height:100%;
-    scrollbar-color: #555 #f1f1f1;
-    scrollbar-width:5px;
+    /* scrollbar-color: #555 #f1f1f1;
+    scrollbar-width:5px; */
 }
 body{
   /*border:3px solid [a-z]+;*/
@@ -120,7 +120,7 @@ header{
   justify-content: space-between;
   align-items: center;
   height: 70%;
-  width: 18%;
+  width: 20%;
   display: flex;
   /* border:3px solid red; */
 }
@@ -209,7 +209,7 @@ header{
     transition:transform 1.5s ease-in;
     
   }
-  .mobile-navbar-switch{
+  .mobile-nav-switch{
     display: initial;
   }
   
@@ -375,6 +375,10 @@ footer{
   100%{
     transform:rotateZ(0deg);
   }
+}
+
+.hidden-button{
+  display:none;
 }
 
 

@@ -25,7 +25,6 @@
     text-decoration: none;
     /* border: 5px solid green; */
 
-
 }
 .search-btn:hover{
   background: #4e4744;
@@ -287,3 +286,19 @@
 
 /*reading state end*/
 
+/*order by books*/
+.order{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    flex-direction: row;
+    padding:5vmin;
+}
+.order-btn{
+    background-color: #4e4744;
+    padding:2.5vmin;
+    color:#f4f4f4;
+    font-size: 1em;
+    margin:1vmin;
+    cursor: pointer;
+}

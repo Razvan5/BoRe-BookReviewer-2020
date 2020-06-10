@@ -62,8 +62,8 @@ body{
     /*Shadow for all browsers*/
     -webkit-filter: drop-shadow(10px 10px 20px #222);
     filter: drop-shadow(10px 10px 20px #222);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    /* -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')"; */
 
 }
 #title{
@@ -179,8 +179,8 @@ footer{
   /*Shadow for all browsers*/
   -webkit-filter: drop-shadow(10px 10px 20px #222);
   filter: drop-shadow(10px 10px 20px #222);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#222')";
-  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#222')";
+  /* -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#222')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#222')"; */
 
   position: fixed;
   bottom:0px;
@@ -202,8 +202,8 @@ footer{
     width:auto;
     -webkit-filter: drop-shadow(5px 5px 10px rgb(135, 135, 135));
      filter: drop-shadow(0.3em 1.5em 1.3em rgb(88, 88, 88));
-    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    /* -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')"; */
 
     transition: height  0.5s ease-in-out;
 
@@ -211,8 +211,8 @@ footer{
 .login-another-site:hover{
     -webkit-filter: drop-shadow(5px 5px 0px rgb(135, 135, 135));
      filter: drop-shadow(0.3em 0em 1.3em rgb(88, 88, 88));
-    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    /* -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')"; */
     height:9vh;
     
     transition:  height  0.5s ease-in-out;
@@ -276,7 +276,25 @@ header{
     transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     z-index: 100;
 }
-#submit-button:hover{
+
+#newAccountBotton{
+    padding-bottom: 25%;
+    height:5vmin;
+    width: 10vmin;
+    position: absolute;
+    top:88%;
+
+    color:#f5f5f5;
+    
+    font-family: Times Roman,sans-serif;
+    font-size: 2vmin;
+    background-color: rgb(220, 20, 60);
+    border: none;
+    clip-path: polygon(100% 0, 100% 100%, 50% 60%, 0 100%, 0 0);
+    transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    z-index: 100;
+}
+#submit-button:hover, #newAccountBotton:hover{
     height:18vmin;
     transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }

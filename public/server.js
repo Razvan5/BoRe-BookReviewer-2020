@@ -15,17 +15,18 @@ var connectedUsersNr = 0;
 //imagini:
 const siteImages = ["/images/arches.png", "/images/arrow-down.png", "/images/book-cover.png", "/images/bookmarks.png", "/images/diagmonds.png", "/images/diagmonds-light.png",
     "/images/facebook.png", "/images/google.png", "/images/help1.png", "/images/help2.png", "/images/help3.png", "/images/help4.png", "/images/help5.png", "/images/help6.png", "/images/help7.png",
-    "/images/help8.png", "/images/help9.png", "/images/loginBook.png", "/images/logo.png", "/images/logo-light.png", "/images/lowerBooCase.png", "/images/notebook.png", "/images/profile.png",
+    "/images/help8.png", "/images/help9.png", "/images/loginBook.png", "/images/logo.png", "/images/logo-light.png", "/images/lowerBooCase.png", "/images/newAccount.png", "/images/notebook.png", "/images/profile.png",
     "/images/registerBook.png", "/images/shattered.png", "/images/shelf.png", "/images/solaris-cover.png", "/images/twitter.png"];
 
 //css-uri:
 const siteStylesheets = ["/stylesheets/about-us.css", "/stylesheets/account.css", "/stylesheets/account-edit.css", "/stylesheets/bookfeed.css", "/stylesheets/comunity.css", "/stylesheets/conditions.css",
     "/stylesheets/friends.css", "/stylesheets/genres.css", "/stylesheets/global.css", "/stylesheets/group.css", "/stylesheets/group-edit.css", "/stylesheets/help.css", "/stylesheets/index.css", "/stylesheets/login.css", "/stylesheets/messages.css", "/stylesheets/myBooks.css",
-    "/stylesheets/notifications.css", "/stylesheets/privacy.css", "/stylesheets/recomandation.css", "/stylesheets/register.css", "/stylesheets/search.css", "/stylesheets/singlebooktemplate.css", "/stylesheets/terms.css"];
+    "/stylesheets/notifications.css", "/stylesheets/privacy.css", "/stylesheets/recomandation.css", "/stylesheets/register.css", "/stylesheets/search.css", "/stylesheets/singlebooktemplate.css", "/stylesheets/statistics.css", "/stylesheets/terms.css"];
 
 //javascripturi
-const siteJavaScripts = ["/javascripts/account.js", "/javascripts/account-edit.js", "/javascripts/bookfeed.js", "/javascripts/comunity.js", "/javascripts/friends.js", "/javascripts/genres.js", "/javascripts/global.js", "/javascripts/group.js", "/javascripts/group-edit.js",
-    "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js", "/javascripts/recomandations.js", "/javascripts/search.js", "/javascripts/singlebooktemplate.js"];
+const siteJavaScripts = ["/javascripts/about-us.js","/javascripts/account.js", "/javascripts/account-edit.js", "/javascripts/bookfeed.js", "/javascripts/comunity.js", "/javascripts/friends.js", "/javascripts/genres.js", "/javascripts/global.js", "/javascripts/group.js", 
+"/javascripts/group-edit.js","/javascripts/index.js", "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js","/javascripts/privacy.js", "/javascripts/recomandations.js", "/javascripts/search.js", "/javascripts/singlebooktemplate.js",
+"/javascripts/statistics.js","/javascripts/terms.js"];
 
 
 //aici este serverul
@@ -201,6 +202,12 @@ var server = http.createServer(function (req, res) {
         fs.createReadStream('pages/singlebooktemplate.html').pipe(res);
     }
 
+    //request pentru statistics
+    if (req.url === "/pages/statistics.html" || req.url === "/statistics" || req.url === "/statistics.html") {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        fs.createReadStream('pages/statistics.html').pipe(res);
+    }
+
     //request pentru terms
     if (req.url === "/pages/terms.html" || req.url === "/terms" || req.url === "/terms.html") {
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -214,7 +221,7 @@ var server = http.createServer(function (req, res) {
 
     //requestul de LOGIN, care vine de la javascripts/login.js
     if (req.url === '/loginRequest') {
-        console.log("DA FAQ?");
+        console.log("/loginRequest");
         var loginInfo = '';
         var userInfo;
         req.on('data', function (chunk) {
@@ -270,6 +277,7 @@ var server = http.createServer(function (req, res) {
 
     //requestul Check Login, care vine de la toate paginile ce necesita ca userul sa fie conectat 
     if (req.url == '/checkLogin') {
+        console.log('/checkLogin');
         var userID = '';
         req.on('data', function (chunk) {
             userID += chunk;
@@ -287,6 +295,38 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     };
+
+
+
+
+
+    //requestul de LOGOUT, care vine de la apasarea butonului de logout
+    if (req.url === '/logoutRequest') {
+        var logoutStatus="Something went wrong";
+        console.log("/logoutRequest");
+        var logoutInfo = '';
+        req.on('data', function (chunk) {
+            logoutInfo += chunk;
+        });
+        req.on('end', () => {
+            console.log(logoutInfo);
+            for(i=0;i<connectedUsers.length;i++){
+                if(connectedUsers[i].ID==logoutInfo){
+                    for(j=i+1;j<connectedUsers.length;j++)
+                    {connectedUsers[j-1]=connectedUsers[j];}
+                    connectedUsersNr--;
+                    logoutStatus=-1;
+                }
+            }
+                res.setHeader('Content-Type', 'application/json');
+                res.setHeader('Set-Cookie', ['userIDCookie=' + logoutStatus.toString()]);
+                res.write(logoutStatus.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
+                res.end();
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
 
 
 });

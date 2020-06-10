@@ -7,7 +7,7 @@ var bookCoverSourceArray = [];      //va fi populat la linia 242 din cod
             authorID : bookAuthorID,
             rating : singleBookRating,
             cover : singleBookCover
-          };*/
+          };*/ 
 
 for (i = 0; i < 100; ++i) {
   bookCoverSourceArray[i] = "../images/solaris-cover.png";//ne imaginam ca avem lista cu imagini
@@ -18,7 +18,7 @@ for (i = 0; i < 100; ++i) {
 function populateBooks() {
 
   var bookshelfwrapper = document.getElementById("bookshelf-wrapper");
-  bookshelfwrapper.innerHTML = '';
+  bookshelfwrapper.innerHTML='';
   console.log(bookshelfwrapper);
 
   var bookshelf = document.createElement("div");
@@ -178,22 +178,12 @@ function populateBooks() {
 
 
 window.onload = function () {
-  var receiveduserID = document.cookie.toString();
-  receiveduserID2 = receiveduserID.split('=')[1];
-  console.log(receiveduserID2);
-  var checkLogin = new XMLHttpRequest();
-  checkLogin.open('POST', '/checkLogin');
-  checkLogin.setRequestHeader("Content-Type", "application/javascript");
-  checkLogin.onload = function () {
-    console.log(checkLogin.responseText);
-    var ok = checkLogin.responseText;
-    console.log(ok);
-    if (ok == 1) {
+  
       var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       var ourRequest = new XMLHttpRequest();
       var mode = ourRequest.mode = 'no-cors';
-      var number = (Math.floor(Math.random() * 7) + 1);
-      ourRequest.open('GET', proxyUrl + 'https://www.goodreads.com/search.xml?key=WpM1JNzR4jTVMnsH26tqcg&q=' + randomChar() + '&field=all&page=' + number);
+      var number=(Math.floor(Math.random() * 7)+1);
+      ourRequest.open('GET', proxyUrl + 'https://www.goodreads.com/search.xml?key=WpM1JNzR4jTVMnsH26tqcg&q='+randomChar()+'&field=all&page='+number);
       ourRequest.onload = function () {
         var singleBook = ourRequest.responseText.split('<work>');    //impartim xml-ul in carti
         var ourData = ourRequest.responseText;
@@ -203,10 +193,10 @@ window.onload = function () {
 
           var singleBookIDTemp;
           var singleBookID;
-          var bookGeneralInfo = singleBook[i].split('<best_book type="Book">')[1];           //umflam informatii generale despre carte, separand stringul
+          var bookGeneralInfo= singleBook[i].split('<best_book type="Book">')[1];           //umflam informatii generale despre carte, separand stringul
+          
 
-
-          singleBookID = bookGeneralInfo;
+          singleBookID =bookGeneralInfo;
           singleBookIDTemp = singleBookID.split('<id type="integer">')[1];             //umflam id-ul, part 1                          
           singleBookID = singleBookIDTemp.split('</id>')[0];                     //umflam id-ul, part 2
           console.log("Book ID:");
@@ -214,20 +204,20 @@ window.onload = function () {
 
           var bookTitle;
           console.log(bookGeneralInfo);
-          var bookTitleTemp = bookGeneralInfo.split('<title>')[1];   //umflam titlul, part 1
-          bookTitle = bookTitleTemp.split('</title>')[0]; //umflam titlul, part 2
+          var bookTitleTemp=bookGeneralInfo.split('<title>')[1];   //umflam titlul, part 1
+          bookTitle=bookTitleTemp.split('</title>')[0]; //umflam titlul, part 2
           console.log("Book Title:");
           console.log(bookTitle);
 
           var bookAuthor;
-          var bookAuthorTemp = bookGeneralInfo.split('<name>')[1];   //umflam autorul, part 1
-          bookAuthor = bookAuthorTemp.split('</name>')[0]; //umflam titlul, part 2
+          var bookAuthorTemp=bookGeneralInfo.split('<name>')[1];   //umflam autorul, part 1
+          bookAuthor=bookAuthorTemp.split('</name>')[0]; //umflam titlul, part 2
           console.log("Book Author:");
           console.log(bookAuthor);
 
           var bookAuthorID;
-          var bookAuthorIDTemp = bookGeneralInfo.split('<id type="integer">')[2];    //umflam ID-ul autorului, part 1
-          bookAuthorID = bookAuthorIDTemp.split('</id>')[0];                         //umflam ID-ul autorului, part 2
+          var bookAuthorIDTemp=bookGeneralInfo.split('<id type="integer">')[2];    //umflam ID-ul autorului, part 1
+          bookAuthorID=bookAuthorIDTemp.split('</id>')[0];                         //umflam ID-ul autorului, part 2
           console.log("Book Author ID:");
           console.log(bookAuthorID);
 
@@ -243,13 +233,13 @@ window.onload = function () {
           console.log("Book Cover:");
           console.log(singleBookCover);
 
-          bookCoverSourceArray[i] = {           //aici construim vectorul de carti
-            ID: singleBookID,
-            title: bookTitle,
-            author: bookAuthor,
-            authorID: bookAuthorID,
-            rating: singleBookRating,
-            cover: singleBookCover
+          bookCoverSourceArray[i]={           //aici construim vectorul de carti
+            ID : singleBookID,
+            title : bookTitle,
+            author : bookAuthor,
+            authorID : bookAuthorID,
+            rating : singleBookRating,
+            cover : singleBookCover
           };
         }
         populateBooks();
@@ -259,79 +249,41 @@ window.onload = function () {
 
       //fetch(proxyUrl+'https://www.goodreads.com/book/show.xml?key=WpM1JNzR4jTVMnsH26tqcg&id=102030').then(data => console.log(data.body.toString()));   
       //.then(response => response.json()) , { mode: 'no-cors'}
-    }
-    else {
-      window.location.href = "/pages/login.html";
-    }
-  };
-
-  checkLogin.send(receiveduserID2);
+    
 }
 
 
-function randomChar() {
+function randomChar(){
   var number = Math.floor(Math.random() * 40);
-  var char = 'a';
-  switch (number) {
-    case (0): char = 'a'; break;
-    case (1): char = 'b'; break;
-    case (2): char = 'c'; break;
-    case (3): char = 'd'; break;
-    case (4): char = 'e'; break;
-    case (5): char = 'f'; break;
-    case (6): char = 'g'; break;
-    case (7): char = 'h'; break;
-    case (8): char = 'i'; break;
-    case (9): char = 'j'; break;
-    case (10): char = 'k'; break;
-    case (11): char = 'l'; break;
-    case (12): char = 'm'; break;
-    case (13): char = 'n'; break;
-    case (14): char = 'o'; break;
-    case (15): char = 'p'; break;
-    case (16): char = 'q'; break;
-    case (17): char = 'r'; break;
-    case (18): char = 's'; break;
-    case (19): char = 't'; break;
-    case (20): char = 'u'; break;
-    case (21): char = 'v'; break;
-    case (22): char = 'w'; break;
-    case (23): char = 'x'; break;
-    case (24): char = 'y'; break;
-    case (25): char = 'z'; break;
-    case (26): char = ''; break;
-  };
-  return char.toString();
-}
-
-
-//requestul de logout
-var logoutButton = document.getElementById("logoutButton");
-
-logoutButton.onclick = function () {
-  var receiveduserID = document.cookie.toString();
-  var receiveduserID2 = receiveduserID.split('=')[1];
-  console.log(receiveduserID2);
-  var logoutRequest = new XMLHttpRequest();
-  logoutRequest.open('POST', '/logoutRequest');
-  logoutRequest.setRequestHeader("Content-Type", "application/javascript");
-  logoutRequest.onload = function () {
-    console.log(logoutRequest.responseText);
-    var ok = logoutRequest.responseText;
-    console.log(ok);
-    if (ok == -1) {
-      document.cookie.toString();
-      receiveduserID2 = receiveduserID.split('=')[1];
-      console.log(receiveduserID2);
-      alert("Logout Successful");
-      window.location.href = "/pages/index.html";
-    }
-    else{
-      alert(ok);
-      window.location.href = "/pages/index.html";
-    }
-
-
-  }
-  logoutRequest.send(receiveduserID2.toString());
+      var char='a';
+      switch(number){
+        case(0) : char='a'; break;
+        case(1) : char='b'; break;
+        case(2) : char='c'; break;
+        case(3) : char='d'; break;
+        case(4) : char='e'; break;
+        case(5) : char='f'; break;
+        case(6) : char='g'; break;
+        case(7) : char='h'; break;
+        case(8) : char='i'; break;
+        case(9) : char='j'; break;
+        case(10) : char='k'; break;
+        case(11) : char='l'; break;
+        case(12) : char='m'; break;
+        case(13) : char='n'; break;
+        case(14) : char='o'; break;
+        case(15) : char='p'; break;
+        case(16) : char='q'; break;
+        case(17) : char='r'; break;
+        case(18) : char='s'; break;
+        case(19) : char='t'; break;
+        case(20) : char='u'; break;
+        case(21) : char='v'; break;
+        case(22) : char='w'; break;
+        case(23) : char='x'; break;
+        case(24) : char='y'; break;
+        case(25) : char='z'; break;
+        case(26) : char=''; break;
+      };
+      return char.toString();
 }

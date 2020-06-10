@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../stylesheets/global.css">
-    <link rel="stylesheet" href="../stylesheets/group-edit.css">
+    <link rel="stylesheet" href="../stylesheets/statistics.css">
     <script src="https://kit.fontawesome.com/0ca67d7a6d.js" crossorigin="anonymous"></script>
     <title>Book</title>
 </head>
@@ -35,18 +35,7 @@
         </div>
     </header>
 
-    <div class="group-settings">
-        <form action="post" id="edit-profile">
-            <div id="change-image">
-                <img src="../images/profile.png" alt="profile" id="group-image">
-                <input type="file" id="upload-image"> 
-            </div>
-            <label for="username">Group Name</label>
-            <input type="text" placeholder="Group Name" id="username" class="input-edit-profile">
-            <label for="details">About the group!</label>
-            <textarea placeholder="Interesting facts about you!" name="about me" cols="30" rows="10" id="details"  class="input-edit-profile"></textarea>
-            <input type="submit" class="submit-btn">
-        </form>
+    <div id="statistics-wrapper">
     </div>
 
     <footer>
@@ -86,8 +75,7 @@
           </div>
         </div>
       </footer>
-      <script src="../javascripts/group-edit.js"></script>
-      <script src="../javascripts/global.js"></script>
-
+      <script src="../javascripts/statistics.js"></script>
+<script src="../javascripts/global.js"></script>
 </body>
 </html>
