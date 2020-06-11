@@ -1,6 +1,6 @@
-const navbarSwitch = document.querySelector(".mobile-navbar-switch");
+const navSwitch = document.querySelector(".mobile-nav-switch");
 
-navbarSwitch.addEventListener("click", () =>{
+navSwitch.addEventListener("click", () =>{
   const header = document.querySelector("header");
   console.log(header);
   if(header.className!=="active"){

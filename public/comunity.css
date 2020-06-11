@@ -82,7 +82,7 @@
 /* imaginea in sine mai sus e divul ei */
 #group-image{
     border-radius: 50%;
-    max-height: 15vmin;
+    height: 15vmin;
     width: auto;
 }
 .group-name{
@@ -133,8 +133,4 @@
 }
 #create-group-btn:hover{
     background-color: #4e4744;
-}
-
-.group-image{
-    max-height:12vh;
 }

@@ -117,14 +117,20 @@ function populateBooks() {
       var coverIndex = row - 1;
       coverIndex = coverIndex * 5;
       coverIndex = coverIndex + book;
-      console.log(coverIndex);
-      console.log(bookCoverSourceArray[coverIndex].cover);
+      // console.log(coverIndex);
+      // console.log(bookCoverSourceArray[coverIndex].cover);
       bookcover.src = bookCoverSourceArray[coverIndex].cover;//aici trebuie pus vectorul cu un counter
       bookcover.alt = "book";
       bookcover.className = "book-cover";
+      var bookTitleDiv= document.createElement("div");
+      bookTitleDiv.className="book-title";
+      console.log(bookCoverSourceArray[coverIndex].title);
+      var textNodeTitle=document.createTextNode(bookCoverSourceArray[coverIndex].title+'...');
+      bookTitleDiv.appendChild(textNodeTitle);
 
       bookDiv.appendChild(bookcover);
       bookDiv.appendChild(reviewStars);
+      bookDiv.appendChild(bookTitleDiv);
       bookDiv.appendChild(readstate);
       bookrow.appendChild(bookDiv);
 
@@ -159,8 +165,8 @@ function populateBooks() {
             if (o.classList[2] === oC.classList[1])
               o.addEventListener("click", () => {
                 s.innerHTML = o.querySelector("label").innerHTML + "<img src=\"../images/arrow-down.png\" alt=\"arrow\" class=\"arrow\">";
-                optionsContainer.classList.remove("active");
-                optionsContainer.style.display = "none";
+                oC.classList.remove("active");
+                oC.style.display = "none";
               });
           });
         });

@@ -31,6 +31,8 @@
     height:auto;
     min-width: 60vw;
     min-height: 50vh;
+    max-height:75vh;
+    overflow-y:scroll;
 }
 #bookmark{
     position: absolute;
@@ -187,4 +189,8 @@ tr:nth-child(even):hover{
     #table-wrapper{
         margin-top:20vh;
     }
+}
+
+.account-image{
+    max-height:10vh;
 }

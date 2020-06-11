@@ -5,6 +5,7 @@ const qs = require('qs');
 var http = require('http');
 var https = require('https');
 var path = require('path');
+const chartjs = require('chart.js');
 const sqlite3 = require('sqlite3').verbose();              //pentru baza de date
 
 
@@ -16,7 +17,9 @@ var connectedUsersNr = 0;
 const siteImages = ["/images/arches.png", "/images/arrow-down.png", "/images/book-cover.png", "/images/bookmarks.png", "/images/diagmonds.png", "/images/diagmonds-light.png",
     "/images/facebook.png", "/images/google.png", "/images/help1.png", "/images/help2.png", "/images/help3.png", "/images/help4.png", "/images/help5.png", "/images/help6.png", "/images/help7.png",
     "/images/help8.png", "/images/help9.png", "/images/loginBook.png", "/images/logo.png", "/images/logo-light.png", "/images/lowerBooCase.png", "/images/newAccount.png", "/images/notebook.png", "/images/profile.png",
-    "/images/registerBook.png", "/images/shattered.png", "/images/shelf.png", "/images/solaris-cover.png", "/images/twitter.png"];
+    "/images/registerBook.png", "/images/shattered.png", "/images/shelf.png", "/images/solaris-cover.png", "/images/twitter.png", "/images/login.png"];
+
+const siteGroupImages = ["/images/groups/clasa3D.jpg", "/images/groups/eijiYoshikawa.jpg", "/images/groups/fii.png"];
 
 //css-uri:
 const siteStylesheets = ["/stylesheets/about-us.css", "/stylesheets/account.css", "/stylesheets/account-edit.css", "/stylesheets/bookfeed.css", "/stylesheets/comunity.css", "/stylesheets/conditions.css",
@@ -24,9 +27,9 @@ const siteStylesheets = ["/stylesheets/about-us.css", "/stylesheets/account.css"
     "/stylesheets/notifications.css", "/stylesheets/privacy.css", "/stylesheets/recomandation.css", "/stylesheets/register.css", "/stylesheets/search.css", "/stylesheets/singlebooktemplate.css", "/stylesheets/statistics.css", "/stylesheets/terms.css"];
 
 //javascripturi
-const siteJavaScripts = ["/javascripts/about-us.js","/javascripts/account.js", "/javascripts/account-edit.js", "/javascripts/bookfeed.js", "/javascripts/comunity.js", "/javascripts/friends.js", "/javascripts/genres.js", "/javascripts/global.js", "/javascripts/group.js", 
-"/javascripts/group-edit.js","/javascripts/index.js", "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js","/javascripts/privacy.js", "/javascripts/recomandations.js", "/javascripts/search.js", "/javascripts/singlebooktemplate.js",
-"/javascripts/statistics.js","/javascripts/terms.js"];
+const siteJavaScripts = ["/javascripts/about-us.js", "/javascripts/account.js", "/javascripts/account-edit.js", "/javascripts/bookfeed.js", "/javascripts/comunity.js", "/javascripts/friends.js", "/javascripts/genres.js", "/javascripts/global.js", "/javascripts/group.js",
+    "/javascripts/group-edit.js", "/javascripts/index.js", "/javascripts/login.js", "/javascripts/messages.js", "/javascripts/myBooks.js", "/javascripts/notifications.js", "/javascripts/privacy.js", "/javascripts/recomandations.js", "/javascripts/register.js", "/javascripts/search.js",
+    "/javascripts/singlebooktemplate.js", "/javascripts/statistics.js", "/javascripts/terms.js"];
 
 
 //aici este serverul
@@ -41,6 +44,16 @@ var server = http.createServer(function (req, res) {
     for (i = 0; i < siteImages.length; i++) {
         if (req.url === siteImages[i]) {
             var addressString = '.' + siteImages[i];
+            var loadImage = fs.readFileSync(addressString);
+            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+            res.write(loadImage);
+            res.end();
+        }
+    }
+
+    for (i = 0; i < siteGroupImages.length; i++) {
+        if (req.url === siteGroupImages[i]) {
+            var addressString = '.' + siteGroupImages[i];
             var loadImage = fs.readFileSync(addressString);
             res.writeHead(200, { 'Content-Type': 'image/jpeg' });
             res.write(loadImage);
@@ -275,6 +288,73 @@ var server = http.createServer(function (req, res) {
         });
     }
 
+
+
+
+
+    //requestul de REGISTER, care vine de la javascripts/register.js
+    if (req.url === '/registerRequest') {
+        console.log("/registerRequest");
+        var success = 0;
+        var loginInfo = '';
+        var userInfo;
+        req.on('data', function (chunk) {
+            loginInfo += chunk;
+        });
+        req.on('end', () => {
+            userInfo = JSON.parse(loginInfo);
+            console.log(loginInfo);
+            console.log(userInfo.name);
+            console.log(userInfo.email); //email
+            console.log(userInfo.password); //password
+
+            //cautam daca nu exista deja un user cu acel email
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            db.all('select email from Users', [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {                 //verificam fiecare row daca corespunde
+                    if (row.email == userInfo.email) {
+                        console.log("Da, exista!");
+                        success = -1;
+                    }
+                });
+            });
+
+
+
+            if (success == 0) {
+                // inseram userul in baza de date
+                db.run(`INSERT INTO Users(Name, email, password) VALUES(?,?,?)`, [userInfo.name, userInfo.email, userInfo.password], function (err) {
+                    if (err) {
+                        return console.log(err.message);
+                    }
+                    // get the last insert id
+                    if (this.lastID > -1)
+                        success = 1;
+                    console.log(`A row has been inserted with rowid ${this.lastID}`);
+                });
+            }
+
+            // close the database connection
+            db.close();
+            setTimeout(requestEnd, 1200);
+            function requestEnd() {
+                res.setHeader('Content-Type', 'application/json');
+                res.write(success.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
+                res.end();
+            }
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    }
+
+
+
+
+
     //requestul Check Login, care vine de la toate paginile ce necesita ca userul sa fie conectat 
     if (req.url == '/checkLogin') {
         console.log('/checkLogin');
@@ -302,7 +382,7 @@ var server = http.createServer(function (req, res) {
 
     //requestul de LOGOUT, care vine de la apasarea butonului de logout
     if (req.url === '/logoutRequest') {
-        var logoutStatus="Something went wrong";
+        var logoutStatus = "Something went wrong";
         console.log("/logoutRequest");
         var logoutInfo = '';
         req.on('data', function (chunk) {
@@ -310,23 +390,248 @@ var server = http.createServer(function (req, res) {
         });
         req.on('end', () => {
             console.log(logoutInfo);
-            for(i=0;i<connectedUsers.length;i++){
-                if(connectedUsers[i].ID==logoutInfo){
-                    for(j=i+1;j<connectedUsers.length;j++)
-                    {connectedUsers[j-1]=connectedUsers[j];}
+            for (i = 0; i < connectedUsers.length; i++) {
+                if (connectedUsers[i].ID == logoutInfo) {
+                    for (j = i + 1; j < connectedUsers.length; j++) { connectedUsers[j - 1] = connectedUsers[j]; }
                     connectedUsersNr--;
-                    logoutStatus=-1;
+                    logoutStatus = -1;
                 }
             }
-                res.setHeader('Content-Type', 'application/json');
-                res.setHeader('Set-Cookie', ['userIDCookie=' + logoutStatus.toString()]);
-                res.write(logoutStatus.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
-                res.end();
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Set-Cookie', ['userIDCookie=' + logoutStatus.toString()]);
+            res.write(logoutStatus.toString());                  //trimitem raspuns la client cu ok (0 sau 1 in functie daca nu am gasit, respectiv am gasit userul).
+            res.end();
         });
         req.on('error', (error) => {
             console.error(error);
         });
     }
+
+
+    //requestul de get groups, care populeaza pagina messages.html cu grupurile din care faci tu parte
+    if (req.url === '/getGroupsRequest') {
+        console.log("/getGroupsRequest");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+            console.log(receivedData);
+            var groupsFound = [];
+
+            var i = 0;
+
+            // cautam grupuri
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            let sql = 'select GroupID, Name, Picture, Description  from Group_Members INNER JOIN Groups on Group_Members.GroupID=Groups.ID where Group_Members.MemberID = ?';
+            let parametru = receivedData;
+            db.all(sql, [parametru], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    groupsFound[i] = {
+                        groupName: "ID: " + row.GroupID + '; Name: ' + row.Name,
+                        groupPhoto: row.Picture,
+                        groupDescription: row.Description
+                    };
+                    i++;
+                });
+                db.close();
+                var data = JSON.stringify(groupsFound);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);
+                res.end();
+            });
+
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+
+
+
+    //requestul messagesRequest, care populeaza pagina messages cu mesaje ale unui grup cand dai click pe el
+    if (req.url === '/messagesRequest') {
+        console.log("/messagesRequest");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+            console.log(receivedData);
+            var messagesFound = [];
+
+            var i = 0;
+
+            // cautam grupuri
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            let sql = 'select GroupChat.ID, Users.Name, GroupChat.Message from GroupChat INNER JOIN Users on GroupChat.UserID=Users.ID where GroupChat.GroupID= ?';
+            let parametru = receivedData;
+            db.all(sql, [parametru], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    messagesFound[i] = {
+                        order: row.ID,
+                        userName: row.Name,
+                        message: row.Message
+                    };
+                    i++;
+                });
+
+                db.close();
+                var data = JSON.stringify(messagesFound);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);
+                res.end();
+            });
+
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+    //requestul postMessage care insereaza un mesaj in baza de date si il si posteaza
+    if (req.url === '/postMessage') {
+        console.log("/postMessage");
+        var receivedData = '';           //trebuie parsat
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+            var messagesFound = [];
+            var i = 0;
+            var temp = JSON.parse(receivedData);
+            receivedData = temp;
+            console.log(receivedData);
+
+            // cautam grupuri
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+
+            // inseram userul in baza de date
+            db.run(`INSERT INTO GroupChat(GroupID, UserID, Message) VALUES(?,?,?)`, [receivedData.groupID, receivedData.userID, receivedData.message], function (err) {
+                if (err) {
+                    return console.log(err.message);
+                }
+                // get the last insert id
+                if (this.lastID > -1)
+                    success = 1;
+                console.log(`A row has been inserted with rowid ${this.lastID}`);
+            });
+
+
+
+            let sql = 'select GroupChat.ID, Users.Name, GroupChat.Message from GroupChat INNER JOIN Users on GroupChat.UserID=Users.ID where GroupChat.GroupID= ?';
+            let parametru = receivedData.groupID;
+            db.all(sql, [parametru], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    messagesFound[i] = {
+                        order: row.ID,
+                        userName: row.Name,
+                        message: row.Message
+                    };
+                    i++;
+                });
+
+                db.close();
+                var data = JSON.stringify(messagesFound);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);
+                res.end();
+            });
+
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+
+
+
+
+
+    //requestul de search groups, in pagina community, unde tu cauti grupuri
+    if (req.url === '/searchGroupRequest') {
+        console.log("/searchGroupRequest");
+        var receivedData = '';        // nu e nevoie sa convertim in json, ca nu e un obiect, e doar text
+
+        req.on('data', function (chunk) {
+            receivedData += chunk;
+        });
+        req.on('end', () => {
+            console.log(receivedData);
+            var groupsFound = [];
+
+            var i = 0;
+
+            // cautam grupuri
+
+
+            let db = new sqlite3.Database('./dataBase/DB.db');
+            let sql = 'select ID, Name, Picture, Description  from Groups';
+            db.all(sql, [], (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                rows.forEach((row) => {
+                    if(row.Name.toLowerCase().indexOf(receivedData.toLowerCase()) != -1){
+                    groupsFound[i] = {
+                        groupName: "ID: " + row.ID + '; Name: ' + row.Name,
+                        groupPhoto: row.Picture,
+                        groupDescription: row.Description
+                    };
+                    i++;
+                }
+                    
+                });
+                db.close();
+                var data = JSON.stringify(groupsFound);
+                console.log(data);
+                res.setHeader('Content-Type', 'application/json');
+                res.write(data);
+                res.end();
+            });
+
+
+
+        });
+        req.on('error', (error) => {
+            console.error(error);
+        });
+    };
+
+
+
+
+
+
 
 
 });

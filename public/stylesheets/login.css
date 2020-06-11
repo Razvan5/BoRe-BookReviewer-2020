@@ -276,25 +276,7 @@ header{
     transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     z-index: 100;
 }
-
-#newAccountBotton{
-    padding-bottom: 25%;
-    height:5vmin;
-    width: 10vmin;
-    position: absolute;
-    top:88%;
-
-    color:#f5f5f5;
-    
-    font-family: Times Roman,sans-serif;
-    font-size: 2vmin;
-    background-color: rgb(220, 20, 60);
-    border: none;
-    clip-path: polygon(100% 0, 100% 100%, 50% 60%, 0 100%, 0 0);
-    transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    z-index: 100;
-}
-#submit-button:hover, #newAccountBotton:hover{
+#submit-button:hover{
     height:18vmin;
     transition: height 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }

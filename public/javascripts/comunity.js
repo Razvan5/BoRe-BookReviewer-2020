@@ -49,3 +49,36 @@ logoutButton.onclick = function () {
   }
   logoutRequest.send(receiveduserID2.toString());
 }
+
+
+
+
+//cautatul grupurilor:
+window.onclick=function(event){
+  if (event.target.matches(".fa-search")) {
+    var buton = document.getElementById("searchValue");
+    var searchWhat = buton.value;
+    console.log("searchWhat" + searchWhat);
+
+    var searchGroupRequest= new XMLHttpRequest();
+    searchGroupRequest.open('POST', '/searchGroupRequest');
+    searchGroupRequest.setRequestHeader("Content-Type", "application/javascript");
+    searchGroupRequest.onload = function () {
+      console.log(searchGroupRequest.responseText);
+      var groups = JSON.parse(searchGroupRequest.responseText);
+      console.log(groups);
+      var groupsList = document.getElementsByClassName("groups-list")[0];
+      console.log(groupsList);
+      groupsList.innerHTML = '';
+      var htmlString = '';
+      for (i = 0; i < groups.length; i++) {
+        htmlString += '<div class="group"> <div class="group-image"><img src="../'+groups[i].groupPhoto+'" alt="group-image" class="group-image"> </div> ';
+        htmlString+='<div class="group-text"><div class="group-name"><a href="group.html" class="group-title">'+groups[i].groupName+'</a><br><br><br><br><br></div>';
+        htmlString+='<div class="group-detail">'+groups[i].groupDescription+'</div></div></div><br><br><br>';
+      }
+      groupsList.innerHTML=htmlString;
+    }
+
+    searchGroupRequest.send(searchWhat.toString());
+  }
+}

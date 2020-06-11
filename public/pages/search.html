@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../stylesheets/global.css">
     <link rel="stylesheet" href="../stylesheets/comunity.css">
+    <link rel="stylesheet" href="../stylesheets/recomandation.css">
     <link rel="stylesheet" href="../stylesheets/search.css">
     <script src="https://kit.fontawesome.com/0ca67d7a6d.js" crossorigin="anonymous"></script>
     <title>Book</title>
@@ -37,21 +38,211 @@
     </header>
 
     <div id="comunity-wrapper">
+      <div class="order">
+        Search by:
+       <button class="order-btn searchBy">Title</button>
+       <button class="order-btn searchBy">Author</button>
+       <button class="order-btn searchBy">All</button>
+     </div>
         <div class="order">
-           Order by:
-          <button class="order-btn">Author</button>
-          <button class="order-btn">Year</button>
-          <button class="order-btn">Genre</button>
+           Order Results by:
+          <button class="order-btn orderBy">Title</button>
+          <button class="order-btn orderBy">Author</button>
+          <button class="order-btn orderBy">Rating</button>
         </div>
         <div class="search-bar">
             <div class="search-box">
-                <input class="search-txt" type="text" name="searchGroups" placeholder="Type to search groups">
-                <a href="#" class="search-btn">
+                <input class="search-txt" type="text" name="searchGroups" placeholder="Type to search books" id="searchValue">
+                <a href="#" class="search-btn"id="search-btn">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
     </div>
+
+
+
+
+    <div id="bookshelf-wrapper">
+      <div id="bookshelf">
+        <div class="bookrow-shelf">
+          <div class="bookrow">
+            
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="book" class="book-cover">
+              <div class="review-stars">
+                  <input type="radio" name="star-1" id="star1-1"><label for="star1-1"></label>
+                  <input type="radio" name="star-1" id="star2-1"><label for="star2-1"></label>
+                  <input type="radio" name="star-1" id="star3-1"><label for="star3-1"></label>
+                  <input type="radio" name="star-1" id="star4-1"><label for="star4-1"></label>
+                  <input type="radio" name="star-1" id="star5-1"><label for="star5-1"></label>
+              </div>
+              <div class="book-title">Solaris</div>
+              <div class="read-state">
+                <div class="select-container">
+                  
+                  <div class="options-container">
+                      <div class="option">
+                        <input type="radio" class="radio" id="read-state-1-1" name="read-state">
+                        <label for="read-state-1-1">Read</label>
+                      </div>
+                      <div class="option">
+                        <input type="radio" class="radio" id="read-state-1-2" name="read-state">
+                        <label for="read-state-1-2">Reading</label>
+                      </div>
+                      <div class="option">
+                        <input type="radio" class="radio" id="read-state-1-3" name="read-state">
+                        <label for="read-state-1-3">Want to read</label>
+                      </div>
+                  </div>
+  
+                  <div class="selected">
+                    To Read
+                    <img src="../images/arrow-down.png" alt="arrow" class="arrow">
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+  
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+              <div class="review-stars">
+                <input type="radio" name="star-2" id="star1-2"><label for="star1-2"></label>
+                <input type="radio" name="star-2" id="star2-2"><label for="star2-2"></label>
+                <input type="radio" name="star-2" id="star3-2"><label for="star3-2"></label>
+                <input type="radio" name="star-2" id="star4-2"><label for="star4-2"></label>
+                <input type="radio" name="star-2" id="star5-2"><label for="star5-2"></label>
+            </div>
+           
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+              <div class="review-stars">
+                <input type="radio" name="star-3" id="star1-3"><label for="star1-3"></label>
+                <input type="radio" name="star-3" id="star2-3"><label for="star2-3"></label>
+                <input type="radio" name="star-3" id="star3-3"><label for="star3-3"></label>
+                <input type="radio" name="star-3" id="star4-3"><label for="star4-3"></label>
+                <input type="radio" name="star-3" id="star5-3"><label for="star5-3"></label>
+            </div>
+            
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+              <div class="review-stars">
+                <input type="radio" name="star-4" id="star1-4"><label for="star1-4"></label>
+                <input type="radio" name="star-4" id="star2-4"><label for="star2-4"></label>
+                <input type="radio" name="star-4" id="star3-4"><label for="star3-4"></label>
+                <input type="radio" name="star-4" id="star4-4"><label for="star4-4"></label>
+                <input type="radio" name="star-4" id="star5-4"><label for="star5-4"></label>
+            </div>
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+              <div class="review-stars">
+                <input type="radio" name="star-5" id="star1-5"><label for="star1-5"></label>
+                <input type="radio" name="star-5" id="star2-5"><label for="star2-5"></label>
+                <input type="radio" name="star-5" id="star3-5"><label for="star3-5"></label>
+                <input type="radio" name="star-5" id="star4-5"><label for="star4-5"></label>
+                <input type="radio" name="star-5" id="star5-5"><label for="star5-5"></label>
+            </div>
+            </div>
+          </div>
+            <img src="../images/shelf.png" alt="shelf" class="shelf">
+            
+        </div>
+        <div class="bookrow-shelf">
+          <div class="bookrow">
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+          </div>
+            <img src="../images/shelf.png" alt="shelf" class="shelf">
+             
+        </div>
+        <div class="bookrow-shelf">
+          <div class="bookrow">
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+          </div>
+            <img src="../images/shelf.png" alt="shelf" class="shelf">
+             
+        </div>
+        <div class="bookrow-shelf">
+          <div class="bookrow">
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+          </div>
+            <img src="../images/shelf.png" alt="shelf" class="shelf">
+             
+        </div>
+        <div class="bookrow-shelf">
+          <div class="bookrow">
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+            <div class="book">
+              <img src="../images/solaris-cover.png" alt="" class="book-cover">
+            </div>
+          </div>
+            <img src="../images/shelf.png" alt="shelf" class="shelf">
+        </div>
+        
+      </div> -->
+      <div class="pagenumbers" id="pagenumbers"></div>
+    </div>
+
+
+
+
+
 
     <footer>
         <div class="info-links">
